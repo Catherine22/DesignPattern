@@ -1,11 +1,11 @@
 package com.catherine.adapter;
 
-public class Computer implements MediaPlayer {
+public class Blu_ray_disc_player implements MediaPlayer {
 
 	@Override
 	public void play() {
 		CableAdapter adapter = new CableAdapter();
-		adapter.play(Cable.VGA);
+		adapter.play(Cable.HDMI);
 	}
 
 }
