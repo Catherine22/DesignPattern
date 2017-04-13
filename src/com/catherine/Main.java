@@ -22,19 +22,19 @@ public class Main {
 
 	private static void testSingleton() {
 		BillPughSingleton bInstance1 = BillPughSingleton.getInstance();
-		bInstance1.print();
+		// bInstance1.print();
 
 		EagerInitializingSingleton eInstance1 = EagerInitializingSingleton.getInstance();
-		eInstance1.print();
+		// eInstance1.print();
 
 		EnumSingleton eunm1 = EnumSingleton.INSTANCE;
-		eInstance1.print();
+		// eInstance1.print();
 
 		LazyInitializingSingleton lInstance1 = LazyInitializingSingleton.getInstance();
-		lInstance1.print();
+		// lInstance1.print();
 
 		SafeLazyInitializingSingleton sInstance1 = SafeLazyInitializingSingleton.getInstance();
-		sInstance1.print();
+		// sInstance1.print();
 
 		Thread t = new Thread(new Runnable() {
 			@Override
@@ -45,27 +45,28 @@ public class Main {
 				LazyInitializingSingleton lInstance2 = LazyInitializingSingleton.getInstance();
 				SafeLazyInitializingSingleton sInstance2 = SafeLazyInitializingSingleton.getInstance();
 
-				if (bInstance1 == bInstance2)
+				SingletonTest sTest = new SingletonTest();
+				if (bInstance1 == bInstance2 && bInstance1 == sTest.getBillPughSingleton())
 					System.out.println("Singleton\tBillPughSingleton 同一个实例");
 				else
 					System.out.println("Singleton\tBillPughSingleton 不同实例");
 
-				if (eInstance1 == eInstance2)
+				if (eInstance1 == eInstance2 && eInstance1 == sTest.getEagerInitializingSingleton())
 					System.out.println("Singleton\tEagerInitializingSingleton 同一个实例");
 				else
 					System.out.println("Singleton\tEagerInitializingSingleton 不同实例");
 
-				if (eunm1 == eunm2)
+				if (eunm1 == eunm2 && eunm1 == sTest.getEnumSingleton())
 					System.out.println("Singleton\tEnumSingleton 同一个实例");
 				else
 					System.out.println("Singleton\tEnumSingleton 不同实例");
 
-				if (lInstance1 == lInstance2)
+				if (lInstance1 == lInstance2 && lInstance1 == sTest.getLazyInitializingSingleton())
 					System.out.println("Singleton\tLazyInitializingSingleton 同一个实例");
 				else
 					System.out.println("Singleton\tLazyInitializingSingleton 不同实例");
 
-				if (sInstance1 == sInstance2)
+				if (sInstance1 == sInstance2 && sInstance1 == sTest.getSafeLazyInitializingSingleton())
 					System.out.println("Singleton\tSafeLazyInitializingSingleton 同一个实例");
 				else
 					System.out.println("Singleton\tSafeLazyInitializingSingleton 不同实例");
