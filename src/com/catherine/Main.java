@@ -5,6 +5,9 @@ import com.catherine.builder.OldStyleRobotBuilder;
 import com.catherine.builder.Robot;
 import com.catherine.builder.RobotDirector;
 import com.catherine.factory.ColorFactory;
+import com.catherine.prototype.Color;
+import com.catherine.prototype.ColorCache;
+import com.catherine.prototype.Type;
 import com.catherine.singleton.BillPughSingleton;
 import com.catherine.singleton.EagerInitializingSingleton;
 import com.catherine.singleton.EnumSingleton;
@@ -14,10 +17,11 @@ import com.catherine.singleton.SafeLazyInitializingSingleton;
 public class Main {
 
 	public static void main(String[] args) {
-		testSingleton();
-		testFactory();
-		testAbstractFactory();
-		testBuilder();
+//		testSingleton();
+//		testFactory();
+//		testAbstractFactory();
+//		testBuilder();
+		testPrototype();
 	}
 
 	private static void testSingleton() {
@@ -97,4 +101,22 @@ public class Main {
 		System.out.println("Builder\t" + robot.getTorso());
 	}
 
+	private static void testPrototype(){
+		try {
+			ColorCache colorCache = new ColorCache();
+			colorCache.initColor();
+			Color blue = colorCache.getColor(Type.BLUE);
+			blue.printID();
+			Color red1 = colorCache.getColor(Type.RED);
+			red1.printID();
+			Color red2 = colorCache.getColor(Type.RED);
+			red2.printID();
+			red2.resetID();
+			red2.printID();
+			System.out.println(red1);
+			System.out.println(red2);
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+	}
 }
