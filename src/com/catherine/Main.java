@@ -1,6 +1,9 @@
 package com.catherine;
 
 import com.catherine.abstract_factory.CarFactory;
+import com.catherine.adapter.Cable;
+import com.catherine.adapter.Computer;
+import com.catherine.adapter.MediaPlayer;
 import com.catherine.builder.OldStyleRobotBuilder;
 import com.catherine.builder.Robot;
 import com.catherine.builder.RobotDirector;
@@ -17,11 +20,12 @@ import com.catherine.singleton.SafeLazyInitializingSingleton;
 public class Main {
 
 	public static void main(String[] args) {
-//		testSingleton();
-//		testFactory();
-//		testAbstractFactory();
-//		testBuilder();
-		testPrototype();
+		// testSingleton();
+		// testFactory();
+		// testAbstractFactory();
+		// testBuilder();
+		// testPrototype();
+		testAdapter();
 	}
 
 	private static void testSingleton() {
@@ -101,7 +105,7 @@ public class Main {
 		System.out.println("Builder\t" + robot.getTorso());
 	}
 
-	private static void testPrototype(){
+	private static void testPrototype() {
 		try {
 			ColorCache colorCache = new ColorCache();
 			Color blue = colorCache.getColor(Type.BLUE);
@@ -117,4 +121,10 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
+
+	private static void testAdapter() {
+		MediaPlayer pc = new Computer();
+		pc.play(Cable.HDMI);
+		pc.play(Cable.VGA);
+	};
 }
