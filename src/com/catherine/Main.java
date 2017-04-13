@@ -104,13 +104,11 @@ public class Main {
 	private static void testPrototype(){
 		try {
 			ColorCache colorCache = new ColorCache();
-			colorCache.initColor();
 			Color blue = colorCache.getColor(Type.BLUE);
 			blue.printID();
 			Color red1 = colorCache.getColor(Type.RED);
 			red1.printID();
 			Color red2 = colorCache.getColor(Type.RED);
-			red2.printID();
 			red2.resetID();
 			red2.printID();
 			System.out.println(red1);
