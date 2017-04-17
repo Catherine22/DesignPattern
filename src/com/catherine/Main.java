@@ -1,6 +1,7 @@
 package com.catherine;
 
 import com.catherine.abstract_factory.CarFactory;
+import com.catherine.adapter.Blu_ray_disc_player;
 import com.catherine.adapter.Cable;
 import com.catherine.adapter.Computer;
 import com.catherine.adapter.MediaPlayer;
@@ -124,7 +125,8 @@ public class Main {
 
 	private static void testAdapter() {
 		MediaPlayer pc = new Computer();
-		pc.play(Cable.HDMI);
-		pc.play(Cable.VGA);
+		pc.play();
+		MediaPlayer br = new Blu_ray_disc_player();
+		br.play();
 	};
 }

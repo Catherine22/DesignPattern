@@ -7,11 +7,16 @@ package com.catherine.adapter;
  * @author Catherine
  *
  */
-public class CableAdapter {
+public class CableAdapter implements MediaPlayer {
 
 	private Monitor monitor;
+	private Cable cable;
 
-	public void play(Cable cable) {
+	public void setType(Cable cable) {
+		this.cable = cable;
+	}
+
+	public void play() {
 		if (cable == Cable.HDMI) {
 			monitor = new HDMIMonitor();
 			monitor.inputHDMI();
