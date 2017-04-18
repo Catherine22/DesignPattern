@@ -14,6 +14,7 @@ import com.catherine.bridge.Hybids_N_Electric_Vehicle;
 import com.catherine.builder.OldStyleRobotBuilder;
 import com.catherine.builder.Robot;
 import com.catherine.builder.RobotDirector;
+import com.catherine.composite.Employee;
 import com.catherine.factory.ColorFactory;
 import com.catherine.filter.AndCriteria;
 import com.catherine.filter.OrCriteria;
@@ -42,7 +43,8 @@ public class Main {
 		// testPrototype();
 		// testAdapter();
 		// testBridge();
-		testFilter();
+		// testFilter();
+		testComposite();
 	}
 
 	private static void testSingleton() {
@@ -173,5 +175,23 @@ public class Main {
 		System.out.println("Men:" + men.meetCriteria(persons));
 		Criteria marriedOrMen = new OrCriteria(married, men);
 		System.out.println("Married or Men:" + marriedOrMen.meetCriteria(persons));
+	}
+
+	public static void testComposite() {
+		Employee ceo = new Employee("Catherine", "CEO", 100000);
+		Employee headSales = new Employee("Conan", "Head sales", 80000);
+		Employee headMarketing = new Employee("Jordon", "Head marketing", 80000);
+		Employee sales1 = new Employee("Elsa", "Sales", 40000);
+		Employee sales2 = new Employee("Anna", "Sales", 40000);
+		Employee marketing = new Employee("Laura", "Marketing", 40000);
+
+		ceo.add(headMarketing);
+		ceo.add(headSales);
+		headMarketing.add(marketing);
+		headSales.add(sales1);
+		headSales.add(sales2);
+		System.out.println("CEO's subordinates:" + ceo.getSubordinates());
+		System.out.println("headSales' subordinates:" + headSales.getSubordinates());
+		System.out.println("headMarketing's subordinates:" + headMarketing.getSubordinates());
 	}
 }
