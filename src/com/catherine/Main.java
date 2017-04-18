@@ -15,6 +15,11 @@ import com.catherine.builder.OldStyleRobotBuilder;
 import com.catherine.builder.Robot;
 import com.catherine.builder.RobotDirector;
 import com.catherine.composite.Employee;
+import com.catherine.decorator.AbstractDecorator;
+import com.catherine.decorator.Car;
+import com.catherine.decorator.StereoSystem;
+import com.catherine.decorator.Tesla;
+import com.catherine.decorator.Wheels;
 import com.catherine.factory.ColorFactory;
 import com.catherine.filter.AndCriteria;
 import com.catherine.filter.OrCriteria;
@@ -44,7 +49,9 @@ public class Main {
 		// testAdapter();
 		// testBridge();
 		// testFilter();
-		testComposite();
+		// testComposite();
+		testDecorator();
+
 	}
 
 	private static void testSingleton() {
@@ -194,4 +201,23 @@ public class Main {
 		System.out.println("headSales' subordinates:" + headSales.getSubordinates());
 		System.out.println("headMarketing's subordinates:" + headMarketing.getSubordinates());
 	}
+
+	private static void testDecorator() {
+		Car tesla = new Tesla();
+		tesla.show();
+		System.out.print("normal Stereo System,\t");
+		System.out.print("normal Wheels,\t");
+		System.out.print("\n");
+		AbstractDecorator teslaWithNewStereo = new StereoSystem(tesla);
+		teslaWithNewStereo.show();
+		System.out.print("normal Wheels,\t");
+		System.out.print("\n");
+		AbstractDecorator teslaWithNewWheels = new Wheels(tesla);
+		teslaWithNewWheels.show();
+		System.out.print("normal Stereo System,\t");
+		System.out.print("\n");
+		AbstractDecorator teslaWithNewWheelsNStereo = new Wheels(teslaWithNewStereo);
+		teslaWithNewWheelsNStereo.show();
+		System.out.print("\n");
+	};
 }
