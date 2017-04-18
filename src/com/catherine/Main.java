@@ -5,6 +5,9 @@ import com.catherine.adapter.Blu_ray_disc_player;
 import com.catherine.adapter.Cable;
 import com.catherine.adapter.Computer;
 import com.catherine.adapter.MediaPlayer;
+import com.catherine.bridge.Black;
+import com.catherine.bridge.BuyerSGuide;
+import com.catherine.bridge.Hybids_N_Electric_Vehicle;
 import com.catherine.builder.OldStyleRobotBuilder;
 import com.catherine.builder.Robot;
 import com.catherine.builder.RobotDirector;
@@ -26,7 +29,8 @@ public class Main {
 		// testAbstractFactory();
 		// testBuilder();
 		// testPrototype();
-		testAdapter();
+		// testAdapter();
+		testBridge();
 	}
 
 	private static void testSingleton() {
@@ -128,5 +132,10 @@ public class Main {
 		pc.play();
 		MediaPlayer br = new Blu_ray_disc_player();
 		br.play();
+	};
+
+	private static void testBridge() {
+		BuyerSGuide bSGuide = new BuyerSGuide(new Hybids_N_Electric_Vehicle(), new Black());
+		bSGuide.addToCart();
 	};
 }
