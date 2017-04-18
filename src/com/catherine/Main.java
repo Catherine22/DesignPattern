@@ -1,5 +1,8 @@
 package com.catherine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.catherine.abstract_factory.CarFactory;
 import com.catherine.adapter.Blu_ray_disc_player;
 import com.catherine.adapter.Cable;
@@ -12,6 +15,14 @@ import com.catherine.builder.OldStyleRobotBuilder;
 import com.catherine.builder.Robot;
 import com.catherine.builder.RobotDirector;
 import com.catherine.factory.ColorFactory;
+import com.catherine.filter.AndCriteria;
+import com.catherine.filter.OrCriteria;
+import com.catherine.filter.Person;
+import com.catherine.filter.criteria.Criteria;
+import com.catherine.filter.criteria.CriteriaFemale;
+import com.catherine.filter.criteria.CriteriaMale;
+import com.catherine.filter.criteria.CriteriaMarried;
+import com.catherine.filter.criteria.CriteriaSingle;
 import com.catherine.prototype.Color;
 import com.catherine.prototype.ColorCache;
 import com.catherine.prototype.Type;
@@ -30,7 +41,8 @@ public class Main {
 		// testBuilder();
 		// testPrototype();
 		// testAdapter();
-		testBridge();
+		// testBridge();
+		testFilter();
 	}
 
 	private static void testSingleton() {
@@ -138,4 +150,28 @@ public class Main {
 		BuyerSGuide bSGuide = new BuyerSGuide(new Hybids_N_Electric_Vehicle(), new Black());
 		bSGuide.addToCart();
 	};
+
+	private static void testFilter() {
+		List<Person> persons = new ArrayList<>();
+		persons.add(new Person("Robert", "Male", "Single"));
+		persons.add(new Person("John", "Male", "Married"));
+		persons.add(new Person("Laura", "Female", "Married"));
+		persons.add(new Person("Diana", "Female", "Single"));
+		persons.add(new Person("Mike", "Male", "Single"));
+		persons.add(new Person("Bobby", "Male", "Single"));
+
+		Criteria single = new CriteriaSingle();
+		System.out.println("Single:" + single.meetCriteria(persons));
+		Criteria women = new CriteriaFemale();
+		System.out.println("Women:" + women.meetCriteria(persons));
+		Criteria singleWomen = new AndCriteria(single, women);
+		System.out.println("Single Women:" + singleWomen.meetCriteria(persons));
+
+		Criteria married = new CriteriaMarried();
+		System.out.println("Married:" + married.meetCriteria(persons));
+		Criteria men = new CriteriaMale();
+		System.out.println("Men:" + men.meetCriteria(persons));
+		Criteria marriedOrMen = new OrCriteria(married, men);
+		System.out.println("Married or Men:" + marriedOrMen.meetCriteria(persons));
+	}
 }
