@@ -36,6 +36,7 @@ import com.catherine.flyweight.ShapeFactory;
 import com.catherine.prototype.Color;
 import com.catherine.prototype.ColorCache;
 import com.catherine.prototype.Type;
+import com.catherine.proxy.ImageLoaderProxy;
 import com.catherine.singleton.BillPughSingleton;
 import com.catherine.singleton.EagerInitializingSingleton;
 import com.catherine.singleton.EnumSingleton;
@@ -56,7 +57,8 @@ public class Main {
 		// testComposite();
 		// testDecorator();
 		// testFacade();
-		testFlyweight();
+		// testFlyweight();
+		testProxy();
 
 	}
 
@@ -243,5 +245,11 @@ public class Main {
 			circle.draw();
 		}
 		sf.debug();
+	}
+
+	private static void testProxy() {
+		ImageLoaderProxy imageLoader = new ImageLoaderProxy();
+		imageLoader.display();
+		imageLoader.display();
 	}
 }
