@@ -2,6 +2,7 @@ package com.catherine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.catherine.abstract_factory.CarFactory;
 import com.catherine.adapter.Blu_ray_disc_player;
@@ -29,6 +30,9 @@ import com.catherine.filter.criteria.CriteriaFemale;
 import com.catherine.filter.criteria.CriteriaMale;
 import com.catherine.filter.criteria.CriteriaMarried;
 import com.catherine.filter.criteria.CriteriaSingle;
+import com.catherine.flyweight.Circle;
+import com.catherine.flyweight.Shape;
+import com.catherine.flyweight.ShapeFactory;
 import com.catherine.prototype.Color;
 import com.catherine.prototype.ColorCache;
 import com.catherine.prototype.Type;
@@ -51,7 +55,8 @@ public class Main {
 		// testFilter();
 		// testComposite();
 		// testDecorator();
-		testFacade();
+		// testFacade();
+		testFlyweight();
 
 	}
 
@@ -226,5 +231,17 @@ public class Main {
 		com.catherine.facade.CarFactory cFactory = new com.catherine.facade.CarFactory();
 		cFactory.buildCoupe();
 		cFactory.buildConvertible();
+	}
+
+	private static void testFlyweight() {
+		final String[] colors = { "BLUE", "BLACK", "YELLOW", "GREEN", "WHITE" };
+		ShapeFactory sf = new ShapeFactory();
+		// 随机产生20个圆
+		for (int i = 0; i < 20; i++) {
+			Circle circle = sf.getCircle(colors[(int) (Math.random() * colors.length)]);
+			circle.setRadius((int) (Math.random() * 100));
+			circle.draw();
+		}
+		sf.debug();
 	}
 }
