@@ -9,7 +9,7 @@ public abstract class AbstractDecorator implements Car {
 
 	public void show() {
 		System.out.println("Decorator: AbstractDecorator");
-		//这边必须实现，否则没有（汽车）本体
+		// 这边必须实现，否则没有（汽车）本体
 		car.show();
 	}
 }

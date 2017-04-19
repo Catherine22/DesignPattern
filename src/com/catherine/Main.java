@@ -50,7 +50,8 @@ public class Main {
 		// testBridge();
 		// testFilter();
 		// testComposite();
-		testDecorator();
+		// testDecorator();
+		testFacade();
 
 	}
 
@@ -220,4 +221,10 @@ public class Main {
 		teslaWithNewWheelsNStereo.show();
 		System.out.print("\n");
 	};
+
+	private static void testFacade() {
+		com.catherine.facade.CarFactory cFactory = new com.catherine.facade.CarFactory();
+		cFactory.buildCoupe();
+		cFactory.buildConvertible();
+	}
 }
