@@ -15,6 +15,10 @@ import com.catherine.bridge.Hybids_N_Electric_Vehicle;
 import com.catherine.builder.OldStyleRobotBuilder;
 import com.catherine.builder.Robot;
 import com.catherine.builder.RobotDirector;
+import com.catherine.chain_of_responsibility.DebugLogger;
+import com.catherine.chain_of_responsibility.ErrorLogger;
+import com.catherine.chain_of_responsibility.Logger;
+import com.catherine.chain_of_responsibility.WarningLogger;
 import com.catherine.composite.Employee;
 import com.catherine.decorator.AbstractDecorator;
 import com.catherine.decorator.Car;
@@ -58,7 +62,8 @@ public class Main {
 		// testDecorator();
 		// testFacade();
 		// testFlyweight();
-		testProxy();
+		// testProxy();
+		testChainOfResponsibility();
 
 	}
 
@@ -251,5 +256,18 @@ public class Main {
 		ImageLoaderProxy imageLoader = new ImageLoaderProxy();
 		imageLoader.display();
 		imageLoader.display();
+	}
+
+	private static void testChainOfResponsibility() {
+		// 先设置logger链，在用的时候一律执行ErrorLogger的实例，呼叫logMessage时就会带入log级别
+		Logger logger = new ErrorLogger();
+		Logger wLogger = new WarningLogger();
+		Logger dLogger = new DebugLogger();
+		logger.setNextLogger(wLogger);
+		wLogger.setNextLogger(dLogger);
+
+		logger.logMessage(Logger.ERROR, "crash");
+		logger.logMessage(Logger.WARNING, "error pages");
+		logger.logMessage(Logger.DEBUG, "change color");
 	}
 }
