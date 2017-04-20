@@ -306,7 +306,7 @@ public class Main {
 		System.out.println("Interpreter: Is Florida one of a state in the United States? " + q1.interpret("Florida"));
 
 		System.out.println("Interpreter: Am I eligible to vote? " + q2.interpret("I am a kid"));
-		System.out.println("Interpreter: Are Mom eligible to vote? " + q2.interpret("She is adult and she is a U.S. citizen"));
+		System.out.println("Interpreter: Is Mom eligible to vote? " + q2.interpret("She is adult and she is a U.S. citizen"));
 
 	}
 }
