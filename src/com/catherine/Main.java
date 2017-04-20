@@ -42,6 +42,8 @@ import com.catherine.filter.criteria.CriteriaSingle;
 import com.catherine.flyweight.Circle;
 import com.catherine.flyweight.Shape;
 import com.catherine.flyweight.ShapeFactory;
+import com.catherine.interpreter.Expression;
+import com.catherine.interpreter.Toolkits;
 import com.catherine.prototype.Color;
 import com.catherine.prototype.ColorCache;
 import com.catherine.prototype.Type;
@@ -69,7 +71,8 @@ public class Main {
 		// testFlyweight();
 		// testProxy();
 		// testChainOfResponsibility();
-		testCommand();
+		// testCommand();
+		testInterpreter();
 
 	}
 
@@ -206,7 +209,7 @@ public class Main {
 	public static void testComposite() {
 		Employee ceo = new Employee("Catherine", "CEO", 100000);
 		Employee headSales = new Employee("Conan", "Head sales", 80000);
-		Employee headMarketing = new Employee("Jordon", "Head marketing", 80000);
+		Employee headMarketing = new Employee("Jordan", "Head marketing", 80000);
 		Employee sales1 = new Employee("Elsa", "Sales", 40000);
 		Employee sales2 = new Employee("Anna", "Sales", 40000);
 		Employee marketing = new Employee("Laura", "Marketing", 40000);
@@ -288,10 +291,22 @@ public class Main {
 		controller.add(dodge);
 		controller.add(jump);
 		controller.combos();
-		
+
 		System.out.print("Command: aerial dash attack: ");
 		controller.add(jump);
 		controller.add(attack);
 		controller.combos();
+	}
+
+	private static void testInterpreter() {
+		Toolkits toolkits = new Toolkits();
+		Expression q1 = toolkits.getStates();
+		Expression q2 = toolkits.getVotingLimitation();
+		System.out.println("Interpreter: Is Beijing one of a state in the United States? " + q1.interpret("Beijing"));
+		System.out.println("Interpreter: Is Florida one of a state in the United States? " + q1.interpret("Florida"));
+
+		System.out.println("Interpreter: Am I eligible to vote? " + q2.interpret("I am a kid"));
+		System.out.println("Interpreter: Are Mom eligible to vote? " + q2.interpret("She is adult and she is a U.S. citizen"));
+
 	}
 }
