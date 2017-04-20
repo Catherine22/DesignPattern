@@ -19,6 +19,11 @@ import com.catherine.chain_of_responsibility.DebugLogger;
 import com.catherine.chain_of_responsibility.ErrorLogger;
 import com.catherine.chain_of_responsibility.Logger;
 import com.catherine.chain_of_responsibility.WarningLogger;
+import com.catherine.command.Attack;
+import com.catherine.command.Command;
+import com.catherine.command.Controller;
+import com.catherine.command.Dodge;
+import com.catherine.command.Jump;
 import com.catherine.composite.Employee;
 import com.catherine.decorator.AbstractDecorator;
 import com.catherine.decorator.Car;
@@ -63,7 +68,8 @@ public class Main {
 		// testFacade();
 		// testFlyweight();
 		// testProxy();
-		testChainOfResponsibility();
+		// testChainOfResponsibility();
+		testCommand();
 
 	}
 
@@ -270,5 +276,22 @@ public class Main {
 		logger.logMessage(Logger.ERROR, "crash");
 		logger.logMessage(Logger.WARNING, "error pages");
 		logger.logMessage(Logger.DEBUG, "change color");
+	}
+
+	private static void testCommand() {
+		Command attack = new Attack();
+		Command jump = new Jump();
+		Command dodge = new Dodge();
+
+		Controller controller = new Controller();
+		System.out.print("Command: roll: ");
+		controller.add(dodge);
+		controller.add(jump);
+		controller.combos();
+		
+		System.out.print("Command: aerial dash attack: ");
+		controller.add(jump);
+		controller.add(attack);
+		controller.combos();
 	}
 }
