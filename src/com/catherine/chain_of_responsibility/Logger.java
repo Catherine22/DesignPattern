@@ -1,7 +1,9 @@
 package com.catherine.chain_of_responsibility;
 
 /**
- * 打印log时，权重最高的{@code ERROR}在较次的权重过滤器中都能打印，反之权重最低的{@code DEBUG}，在其它权重过滤器时都不会被打印
+ * 打印log时，权重最高的{@code ERROR}在较次的权重过滤器中都能打印，反之权重最低的{@code DEBUG}，在其它权重过滤器时都不会被打印。
+ * <br>
+ * 先设置logger链，在用的时候一律执行ErrorLogger的实例，呼叫logMessage时就会带入log级别，具体详见{@link #com.catherine.Main.testChainOfResponsibility()}
  * 
  * @author Catherine
  *
@@ -25,9 +27,9 @@ public abstract class Logger {
 	 * @param message
 	 */
 	public void logMessage(int level, String message) {
-		if(this.level<=level)
+		if (this.level <= level)
 			write(message);
-		
+
 		if (nextLogger != null)
 			nextLogger.logMessage(level, message);
 	}

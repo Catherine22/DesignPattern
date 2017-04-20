@@ -266,6 +266,7 @@ public class Main {
 		logger.setNextLogger(wLogger);
 		wLogger.setNextLogger(dLogger);
 
+		// 真正开始测试
 		logger.logMessage(Logger.ERROR, "crash");
 		logger.logMessage(Logger.WARNING, "error pages");
 		logger.logMessage(Logger.DEBUG, "change color");
