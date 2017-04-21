@@ -54,6 +54,9 @@ import com.catherine.singleton.EnumSingleton;
 import com.catherine.singleton.LazyInitializingSingleton;
 import com.catherine.singleton.SafeLazyInitializingSingleton;
 
+import iterator.Iterator;
+import iterator.Sequence;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -72,7 +75,8 @@ public class Main {
 		// testProxy();
 		// testChainOfResponsibility();
 		// testCommand();
-		testInterpreter();
+		// testInterpreter();
+		testIterator();
 
 	}
 
@@ -306,7 +310,15 @@ public class Main {
 		System.out.println("Interpreter: Is Florida one of a state in the United States? " + q1.interpret("Florida"));
 
 		System.out.println("Interpreter: Am I eligible to vote? " + q2.interpret("I am a kid"));
-		System.out.println("Interpreter: Is Mom eligible to vote? " + q2.interpret("She is adult and she is a U.S. citizen"));
+		System.out.println(
+				"Interpreter: Is Mom eligible to vote? " + q2.interpret("She is adult and she is a U.S. citizen"));
+	}
 
+	private static void testIterator() {
+		Sequence sequence = new Sequence();
+		System.out.print("Iterator: ");
+		for (Iterator iterator = sequence.getIterator(); iterator.hasNext();)
+			System.out.print(iterator.next() + " ");
+		System.out.print("\n");
 	}
 }
