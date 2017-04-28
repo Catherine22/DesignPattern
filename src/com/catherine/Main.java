@@ -45,6 +45,8 @@ import com.catherine.flyweight.ShapeFactory;
 import com.catherine.interpreter.Expression;
 import com.catherine.interpreter.Toolkits;
 import com.catherine.mediator.User;
+import com.catherine.memento.Settings;
+import com.catherine.memento.World;
 import com.catherine.prototype.Color;
 import com.catherine.prototype.ColorCache;
 import com.catherine.prototype.Type;
@@ -78,7 +80,8 @@ public class Main {
 		// testCommand();
 		// testInterpreter();
 		// testIterator();
-		testMediator();
+//		testMediator();
+		testMemento();
 
 	}
 
@@ -327,5 +330,25 @@ public class Main {
 	private static void testMediator() {
 		User user = new User("A001", "Sev");
 		user.sendMessage("Hi, there.");
+	}
+
+	private static void testMemento() {
+		Settings settings = new Settings();
+		
+		World village1 = new World();
+		village1.setAmmo("Hunter arrow");
+		village1.setWeapon("Sharpshot bow");
+		village1.setXP(10000);
+		village1.setOutfit("Noar survivor");
+		settings.save(village1.getState());
+		System.out.println(settings.load());
+
+		World village2 = new World();
+		village2.setAmmo("Fire arrow");
+		village2.setWeapon("War bow");
+		village2.setXP(20000);
+		village2.setOutfit("Shield weaver");
+		settings.save(village2.getState());
+		System.out.println(settings.load());
 	}
 }
