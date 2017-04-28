@@ -44,6 +44,7 @@ import com.catherine.flyweight.Shape;
 import com.catherine.flyweight.ShapeFactory;
 import com.catherine.interpreter.Expression;
 import com.catherine.interpreter.Toolkits;
+import com.catherine.mediator.User;
 import com.catherine.prototype.Color;
 import com.catherine.prototype.ColorCache;
 import com.catherine.prototype.Type;
@@ -76,7 +77,8 @@ public class Main {
 		// testChainOfResponsibility();
 		// testCommand();
 		// testInterpreter();
-		testIterator();
+		// testIterator();
+		testMediator();
 
 	}
 
@@ -320,5 +322,10 @@ public class Main {
 		for (Iterator iterator = sequence.getIterator(); iterator.hasNext();)
 			System.out.print(iterator.next() + " ");
 		System.out.print("\n");
+	}
+
+	private static void testMediator() {
+		User user = new User("A001", "Sev");
+		user.sendMessage("Hi, there.");
 	}
 }
