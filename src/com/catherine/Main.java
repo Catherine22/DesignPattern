@@ -47,6 +47,11 @@ import com.catherine.interpreter.Toolkits;
 import com.catherine.mediator.User;
 import com.catherine.memento.Settings;
 import com.catherine.memento.World;
+import com.catherine.observer.BinaryObserver;
+import com.catherine.observer.BroadcastManager;
+import com.catherine.observer.HexObserver;
+import com.catherine.observer.OctalObserver;
+import com.catherine.observer_plus.Receiver;
 import com.catherine.prototype.Color;
 import com.catherine.prototype.ColorCache;
 import com.catherine.prototype.Type;
@@ -80,8 +85,10 @@ public class Main {
 		// testCommand();
 		// testInterpreter();
 		// testIterator();
-//		testMediator();
-		testMemento();
+		// testMediator();
+		// testMemento();
+		// testObserver();
+		testObserverPlus();
 
 	}
 
@@ -334,7 +341,7 @@ public class Main {
 
 	private static void testMemento() {
 		Settings settings = new Settings();
-		
+
 		World village1 = new World();
 		village1.setAmmo("Hunter arrow");
 		village1.setWeapon("Sharpshot bow");
@@ -350,5 +357,39 @@ public class Main {
 		village2.setOutfit("Shield weaver");
 		settings.save(village2.getState());
 		System.out.println(settings.load());
+	}
+
+	private static void testObserver() {
+		BroadcastManager manager = new BroadcastManager();
+		new BinaryObserver(manager);
+		new HexObserver(manager);
+		new OctalObserver(manager);
+		manager.setState(17);
+		manager.setState(300);
+	}
+
+	private static void testObserverPlus() {
+		com.catherine.observer_plus.BroadcastManager manager = new com.catherine.observer_plus.BroadcastManager();
+		manager.register(new Receiver() {
+
+			@Override
+			public void onReceive(String content) {
+				System.out.println(String.format("Observer plus: (Main1)%s", content));
+			}
+		});
+		manager.register(new Receiver() {
+
+			@Override
+			public void onReceive(String content) {
+				System.out.println(String.format("Observer plus: (Main2)%s", content));
+			}
+		});
+		ObserverPlusTest observerPlusTest = new ObserverPlusTest();
+		observerPlusTest.registerReceiver();
+		manager.sendMessage("Wake up!");
+		
+
+		observerPlusTest.unregisterReceiver();
+		manager.sendMessage("Hurry!");
 	}
 }
