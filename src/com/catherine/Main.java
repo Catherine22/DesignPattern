@@ -336,7 +336,7 @@ public class Main {
 
 	private static void testMediator() {
 		User user = new User("A001", "Sev");
-		user.sendMessage("Hi, there.");
+		user.sendMessage("Hi there.");
 	}
 
 	private static void testMemento() {
