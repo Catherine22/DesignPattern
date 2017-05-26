@@ -1,7 +1,7 @@
 package com.catherine;
 
-import com.catherine.observer_plus.BroadcastManager;
-import com.catherine.observer_plus.Receiver;
+import com.catherine.observer_premium.BroadcastManager;
+import com.catherine.observer_premium.Receiver;
 
 public class ObserverPlusTest {
 	private BroadcastManager manager;

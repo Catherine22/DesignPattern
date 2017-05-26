@@ -51,7 +51,7 @@ import com.catherine.observer.BinaryObserver;
 import com.catherine.observer.BroadcastManager;
 import com.catherine.observer.HexObserver;
 import com.catherine.observer.OctalObserver;
-import com.catherine.observer_plus.Receiver;
+import com.catherine.observer_premium.Receiver;
 import com.catherine.prototype.Color;
 import com.catherine.prototype.ColorCache;
 import com.catherine.prototype.Type;
@@ -61,6 +61,10 @@ import com.catherine.singleton.EagerInitializingSingleton;
 import com.catherine.singleton.EnumSingleton;
 import com.catherine.singleton.LazyInitializingSingleton;
 import com.catherine.singleton.SafeLazyInitializingSingleton;
+import com.catherine.state.Gear;
+import com.catherine.state.Gear1;
+import com.catherine.state.Gear2;
+import com.catherine.state.GearR;
 
 import iterator.Iterator;
 import iterator.Sequence;
@@ -88,7 +92,8 @@ public class Main {
 		// testMediator();
 		// testMemento();
 		// testObserver();
-		testObserverPlus();
+		// testObserverPlus();
+		testState();
 
 	}
 
@@ -369,7 +374,7 @@ public class Main {
 	}
 
 	private static void testObserverPlus() {
-		com.catherine.observer_plus.BroadcastManager manager = new com.catherine.observer_plus.BroadcastManager();
+		com.catherine.observer_premium.BroadcastManager manager = new com.catherine.observer_premium.BroadcastManager();
 		manager.register(new Receiver() {
 
 			@Override
@@ -387,9 +392,19 @@ public class Main {
 		ObserverPlusTest observerPlusTest = new ObserverPlusTest();
 		observerPlusTest.registerReceiver();
 		manager.sendMessage("Wake up!");
-		
 
 		observerPlusTest.unregisterReceiver();
 		manager.sendMessage("Hurry!");
+	}
+
+	private static void testState() {
+		Gear g = new Gear1();
+		System.out.println(g.getState());
+
+		g = new Gear2();
+		System.out.println(g.getState());
+
+		g = new GearR();
+		System.out.println(g.getState());
 	}
 }
