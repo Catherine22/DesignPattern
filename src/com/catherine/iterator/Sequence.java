@@ -1,4 +1,4 @@
-package iterator;
+package com.catherine.iterator;
 
 public class Sequence implements Container {
 	private String[] weekdays = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" };

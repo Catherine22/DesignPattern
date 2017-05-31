@@ -44,6 +44,8 @@ import com.catherine.flyweight.Shape;
 import com.catherine.flyweight.ShapeFactory;
 import com.catherine.interpreter.Expression;
 import com.catherine.interpreter.Toolkits;
+import com.catherine.iterator.Iterator;
+import com.catherine.iterator.Sequence;
 import com.catherine.mediator.User;
 import com.catherine.memento.Settings;
 import com.catherine.memento.World;
@@ -71,9 +73,8 @@ import com.catherine.strategy.Operation;
 import com.catherine.strategy.OperationAdd;
 import com.catherine.strategy.OperationMultiply;
 import com.catherine.strategy.OperationSubstract;
-
-import iterator.Iterator;
-import iterator.Sequence;
+import com.catherine.template.Blizzard;
+import com.catherine.template.Supercell;
 
 public class Main {
 
@@ -101,19 +102,30 @@ public class Main {
 		// testObserverPlus();
 		// testState();
 		// testNullObject();
-		testStrategy();
+		// testStrategy();
+		testTemplate();
 
+	}
+
+	private static void testTemplate() {
+		Supercell supercell = new Supercell();
+		supercell.buyAds();
+
+		System.out.println("");
+
+		Blizzard blizzard = new Blizzard();
+		blizzard.buyAds();
 	}
 
 	private static void testStrategy() {
 		Calculator calculator = new Calculator(new OperationAdd());
 		System.out.println("4 + 5 = " + calculator.execute(4, 5));
 
-		calculator = new Calculator(new OperationMultiply());
-		System.out.println("4 * 5 = " + calculator.execute(4, 5));
-
 		calculator = new Calculator(new OperationSubstract());
 		System.out.println("4 - 5 = " + calculator.execute(4, 5));
+
+		calculator = new Calculator(new OperationMultiply());
+		System.out.println("4 * 5 = " + calculator.execute(4, 5));
 	}
 
 	private static void testNullObject() {

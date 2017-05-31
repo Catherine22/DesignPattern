@@ -1,4 +1,4 @@
-package iterator;
+package com.catherine.iterator;
 
 public interface Iterator {
 	public boolean hasNext();
