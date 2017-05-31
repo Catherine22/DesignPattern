@@ -66,6 +66,11 @@ import com.catherine.state.Gear;
 import com.catherine.state.Gear1;
 import com.catherine.state.Gear2;
 import com.catherine.state.GearR;
+import com.catherine.strategy.Calculator;
+import com.catherine.strategy.Operation;
+import com.catherine.strategy.OperationAdd;
+import com.catherine.strategy.OperationMultiply;
+import com.catherine.strategy.OperationSubstract;
 
 import iterator.Iterator;
 import iterator.Sequence;
@@ -95,8 +100,20 @@ public class Main {
 		// testObserver();
 		// testObserverPlus();
 		// testState();
-		testNullObject();
+		// testNullObject();
+		testStrategy();
 
+	}
+
+	private static void testStrategy() {
+		Calculator calculator = new Calculator(new OperationAdd());
+		System.out.println("4 + 5 = " + calculator.execute(4, 5));
+
+		calculator = new Calculator(new OperationMultiply());
+		System.out.println("4 * 5 = " + calculator.execute(4, 5));
+
+		calculator = new Calculator(new OperationSubstract());
+		System.out.println("4 - 5 = " + calculator.execute(4, 5));
 	}
 
 	private static void testNullObject() {
