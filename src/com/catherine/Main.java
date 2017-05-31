@@ -2,7 +2,6 @@ package com.catherine;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.catherine.abstract_factory.CarFactory;
 import com.catherine.adapter.Blu_ray_disc_player;
@@ -69,7 +68,6 @@ import com.catherine.state.Gear1;
 import com.catherine.state.Gear2;
 import com.catherine.state.GearR;
 import com.catherine.strategy.Calculator;
-import com.catherine.strategy.Operation;
 import com.catherine.strategy.OperationAdd;
 import com.catherine.strategy.OperationMultiply;
 import com.catherine.strategy.OperationSubstract;

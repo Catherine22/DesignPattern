@@ -1,12 +1,12 @@
-# Design Pattern
+# 设计模式
 
-[中文版]
+[English]
 
 
-## Reference
+## 参考来源
   - [tutorialspoint]
 
-## License
+## 开源授权协议
 
   ```
   Copyright 2017 Catherine Chen (https://github.com/Catherine22)
@@ -25,4 +25,4 @@
   ```
 
 [tutorialspoint]:<https://www.tutorialspoint.com/design_pattern/index.htm>
-[中文版]:<https://github.com/Catherine22/DesignPattern/blob/master/README_cn.md>
+[English]:<https://github.com/Catherine22/DesignPattern/blob/master/README.md>
