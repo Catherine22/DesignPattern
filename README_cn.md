@@ -29,7 +29,7 @@
 - 抽象工厂用在有大量工厂时，大致上与工厂模式一样，可理解成超级工厂模式。
 - [超级工厂]内有各式工厂，工厂内部运作同工厂模式。
 
-### 建造模式
+### 建造者模式
 - 经过一系列的步骤完成一个复杂的对象。
 - 假设用户要生产[新型机器人]和[旧式机器人]，定义[机器人]并实现[RobotPlan]，
 制作[机器人]的步骤都一样（用[RobotBuilder]定义），所以两者只需要实现[RobotBuilder]接口，
@@ -37,8 +37,8 @@
 
 
 ## 参考来源
-
-[tutorialspoint]
+- [runoob.com]
+- [tutorialspoint]
 
 ## 开源授权协议
 
@@ -58,7 +58,8 @@
   the License.
   ```
 
-[tutorialspoint]:<https://www.tutorialspoint.com/design_pattern/index.htm>
+[runoob.com]:<https://www.tutorialspoint.com/design_pattern/index.htm>
+[]:<http://www.runoob.com/design-pattern/design-pattern-tutorial.html>
 [English]:<https://github.com/Catherine22/DesignPattern/blob/master/README.md>
 [LazyInitializingSingleton]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/singleton/LazyInitializingSingleton.java>
 [SafeLazyInitializingSingleton]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/singleton/SafeLazyInitializingSingleton.java>

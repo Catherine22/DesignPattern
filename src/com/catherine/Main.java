@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.catherine.abstract_factory.CarFactory;
 import com.catherine.adapter.Blu_ray_disc_player;
-import com.catherine.adapter.Cable;
 import com.catherine.adapter.Computer;
 import com.catherine.adapter.MediaPlayer;
 import com.catherine.bridge.Black;
@@ -39,7 +38,6 @@ import com.catherine.filter.criteria.CriteriaMale;
 import com.catherine.filter.criteria.CriteriaMarried;
 import com.catherine.filter.criteria.CriteriaSingle;
 import com.catherine.flyweight.Circle;
-import com.catherine.flyweight.Shape;
 import com.catherine.flyweight.ShapeFactory;
 import com.catherine.interpreter.Expression;
 import com.catherine.interpreter.Toolkits;
@@ -73,6 +71,11 @@ import com.catherine.strategy.OperationMultiply;
 import com.catherine.strategy.OperationSubstract;
 import com.catherine.template.Blizzard;
 import com.catherine.template.Supercell;
+import com.catherine.visitor.AccessLevel;
+import com.catherine.visitor.PrivateLevel;
+import com.catherine.visitor.ProtectedLevel;
+import com.catherine.visitor.PublicLevel;
+import com.catherine.visitor.RetrieveMethod;
 
 public class Main {
 
@@ -101,8 +104,23 @@ public class Main {
 		// testState();
 		// testNullObject();
 		// testStrategy();
-		testTemplate();
+		// testTemplate();
+		testVisitor();
 
+	}
+
+	private static void testVisitor() {
+		System.out.println("Private");
+		AccessLevel level = new PrivateLevel();
+		level.showInfo(new RetrieveMethod());
+
+		System.out.println("Protected");
+		level = new ProtectedLevel();
+		level.showInfo(new RetrieveMethod());
+
+		System.out.println("Public");
+		level = new PublicLevel();
+		level.showInfo(new RetrieveMethod());
 	}
 
 	private static void testTemplate() {
