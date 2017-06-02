@@ -46,6 +46,7 @@ import com.catherine.iterator.Sequence;
 import com.catherine.mediator.User;
 import com.catherine.memento.Settings;
 import com.catherine.memento.World;
+import com.catherine.mvc.RetrieveCouponFromDB;
 import com.catherine.null_object.IDChecker;
 import com.catherine.observer.BinaryObserver;
 import com.catherine.observer.BroadcastManager;
@@ -105,8 +106,25 @@ public class Main {
 		// testNullObject();
 		// testStrategy();
 		// testTemplate();
-		testVisitor();
+		// testVisitor();
+		testMVC();
 
+	}
+
+	private static void testMVC() {
+		RetrieveCouponFromDB rc = new RetrieveCouponFromDB();
+		rc.downloadCoupons();
+
+		// click an item
+		String ID = "0001";
+		rc.downloadCouponDetail(ID);
+
+		// refresh
+		rc.downloadCoupons();
+
+		// click an item
+		ID = "0002";
+		rc.downloadCouponDetail(ID);
 	}
 
 	private static void testVisitor() {
