@@ -12,7 +12,7 @@ import java.util.List;
  * 但是为了用单例模式解决多线程修改数据的问题直接省略<br>
  * 
  * 用singleton避免多线程操作数据库<br>
- * static synchronized可以保证无论有多少线程，同时只会有一个线程在该方法
+ * static synchronized可以保证无论有多少线程，同时只会有一个线程执行该方法
  * 
  * @author Catherine
  *
@@ -58,8 +58,6 @@ public class BlacklistDAOImpl {
 	public static synchronized void add(Contact contact) {
 		try {
 			Statement statement = dbHelper.getStatement();
-			statement.executeUpdate(
-					"create table if not exists person (_id integer primary key autoincrement, name string, block integer)");
 			statement.executeUpdate(String.format("insert into person values(%s, '%s', %d)", null, contact.getName(),
 					contact.getBlock()));
 		} catch (SQLException e) {
@@ -74,8 +72,6 @@ public class BlacklistDAOImpl {
 	public static synchronized void update(Contact contact) {
 		try {
 			Statement statement = dbHelper.getStatement();
-			statement.executeUpdate(
-					"create table if not exists person (_id integer primary key autoincrement, name string, block integer)");
 			ResultSet rs = statement.executeQuery(String.format("select * from person where _id=%d", contact.getID()));
 			if (rs.next()) {
 				statement.executeUpdate(String.format("update person set name='%s', block=%d where _id=%d",
@@ -96,8 +92,6 @@ public class BlacklistDAOImpl {
 	public static synchronized void delete(int ID) {
 		try {
 			Statement statement = dbHelper.getStatement();
-			statement.executeUpdate(
-					"create table if not exists person (_id integer primary key autoincrement, name string, block integer)");
 			ResultSet rs = statement.executeQuery(String.format("select * from person where _id=%d", ID));
 			if (rs.next()) {
 				statement.executeUpdate(String.format("delete from person where _id=%d", ID));

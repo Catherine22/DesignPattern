@@ -6,15 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class BlacklistOpenHelper {
+class BlacklistOpenHelper {
 	private Connection connection;
 	private final String DB_PATH = "jdbc:sqlite:blacklist.db";
 
 	protected void create() {
 		try {
 			Statement statement = getStatement();
-			statement.executeUpdate(
-					"create table if not exists person (_id integer primary key autoincrement, name string, block integer)");
 			ResultSet rs = statement.executeQuery("select * from person");
 			while (rs.next()) {
 				// read the result set
@@ -56,6 +54,8 @@ public class BlacklistOpenHelper {
 		connection = DriverManager.getConnection(DB_PATH);
 		Statement statement = connection.createStatement();
 		statement.setQueryTimeout(30); // set timeout to 30 sec.
+		statement.executeUpdate(
+				"create table if not exists person (_id integer primary key autoincrement, name string, block integer)");
 		return statement;
 	}
 }
