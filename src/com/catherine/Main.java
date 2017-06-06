@@ -171,8 +171,10 @@ public class Main {
 			System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));
 		}
 
-		System.out.println(String.format("(%s)Delete _id=2", Thread.currentThread().getName()));
-		daoImpl.delete(2);
+		blacklist = daoImpl.getBlacklist();
+		System.out.println(
+				String.format("(%s)Delete _id=%d", Thread.currentThread().getName(), blacklist.get(1).getID()));
+		daoImpl.delete(blacklist.get(1).getID());
 		blacklist = daoImpl.getBlacklist();
 		for (int i = 0; i < blacklist.size(); i++) {
 			System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));

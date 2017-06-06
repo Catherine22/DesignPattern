@@ -58,8 +58,11 @@ public class BlacklistDAOImpl {
 	public static synchronized void add(Contact contact) {
 		try {
 			Statement statement = dbHelper.getStatement();
-			statement.executeUpdate(String.format("insert into person values(%s, '%s', %d)", null, contact.getName(),
-					contact.getBlock()));
+			ResultSet rs = statement.executeQuery(String.format("select * from person where name='%s' and block=%d",
+					contact.getName(), contact.getBlock()));
+			if (!rs.next())// Avoid to add duplicates
+				statement.executeUpdate(String.format("insert into person values(%s, '%s', %d)", null,
+						contact.getName(), contact.getBlock()));
 		} catch (SQLException e) {
 			// if the error message is "out of memory",
 			// it probably means no database file is found
