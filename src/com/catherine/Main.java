@@ -120,7 +120,7 @@ public class Main {
 	}
 
 	private static void testDAO() {
-		BlacklistDAOImpl daoImpl = BlacklistDAOImpl.getInstance();
+		BlacklistDAOImpl.getInstance();
 		Contact contact1 = new Contact();
 		contact1.setName("Zhang-San");
 		contact1.setBlock(Contact.BLOCK_PHONE_CALL);
@@ -129,15 +129,10 @@ public class Main {
 		contact2.setName("Li-Si");
 		contact2.setBlock(Contact.BLOCK_PHONE_CALL | Contact.BLOCK_SMS);
 
-		Contact contact3 = new Contact();
-		contact3.setName("Wang-Wu");
-		contact3.setBlock(Contact.BLOCK_PHONE_CALL | Contact.BLOCK_SMS);
-
-		daoImpl.add(contact1);
-		daoImpl.add(contact2);
-		// daoImpl.add(contact3);
-		System.out.println(String.format("(%s)Add Zhang-San, Li-Si and Wang-Wu", Thread.currentThread().getName()));
-		List<Contact> blacklist = daoImpl.getBlacklist();
+		BlacklistDAOImpl.add(contact1);
+		BlacklistDAOImpl.add(contact2);
+		System.out.println(String.format("(%s)Add Zhang-San and Li-Si", Thread.currentThread().getName()));
+		List<Contact> blacklist = BlacklistDAOImpl.getBlacklist();
 		for (int i = 0; i < blacklist.size(); i++) {
 			System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));
 		}
@@ -146,14 +141,14 @@ public class Main {
 		Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				BlacklistDAOImpl daoImpl = BlacklistDAOImpl.getInstance();
+				BlacklistDAOImpl.getInstance();
 				Contact contact3 = new Contact();
 				contact3.setName("Wang-Wu");
 				contact3.setBlock(Contact.BLOCK_PHONE_CALL | Contact.BLOCK_SMS);
-				daoImpl.add(contact3);
+				BlacklistDAOImpl.add(contact3);
 				System.out
 						.println(String.format("(%s)Add Wang-Wu in another thread", Thread.currentThread().getName()));
-				List<Contact> blacklist = daoImpl.getBlacklist();
+				List<Contact> blacklist = BlacklistDAOImpl.getBlacklist();
 				for (int i = 0; i < blacklist.size(); i++) {
 					System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));
 				}
@@ -165,17 +160,17 @@ public class Main {
 		System.out.println(String.format("(%s)Update Li-Si", Thread.currentThread().getName()));
 		contact.setName("Li-Si");
 		contact.setBlock(Contact.BLOCK_SMS);
-		daoImpl.update(contact);
-		blacklist = daoImpl.getBlacklist();
+		BlacklistDAOImpl.update(contact);
+		blacklist = BlacklistDAOImpl.getBlacklist();
 		for (int i = 0; i < blacklist.size(); i++) {
 			System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));
 		}
 
-		blacklist = daoImpl.getBlacklist();
+		blacklist = BlacklistDAOImpl.getBlacklist();
 		System.out.println(
 				String.format("(%s)Delete _id=%d", Thread.currentThread().getName(), blacklist.get(1).getID()));
-		daoImpl.delete(blacklist.get(1).getID());
-		blacklist = daoImpl.getBlacklist();
+		BlacklistDAOImpl.delete(blacklist.get(1).getID());
+		blacklist = BlacklistDAOImpl.getBlacklist();
 		for (int i = 0; i < blacklist.size(); i++) {
 			System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));
 		}
