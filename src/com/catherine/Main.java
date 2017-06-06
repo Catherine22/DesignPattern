@@ -26,6 +26,7 @@ import com.catherine.command.Controller;
 import com.catherine.command.Dodge;
 import com.catherine.command.Jump;
 import com.catherine.composite.Employee;
+import com.catherine.composite_entity.Cashier;
 import com.catherine.decorator.AbstractDecorator;
 import com.catherine.decorator.Car;
 import com.catherine.decorator.StereoSystem;
@@ -111,8 +112,18 @@ public class Main {
 		// testTemplate();
 		// testVisitor();
 		// testMVC();
-		testBusinessDelegate();
+		// testBusinessDelegate();
+		testCompositeEntity();
 
+	}
+
+	private static void testCompositeEntity() {
+		Cashier cashier = new Cashier();
+		cashier.chectOut("white", "roast beef", "BBQ");
+		cashier.printReceipt();
+		
+		cashier.chectOut("honey oat", "meatball", "olive oil & salt");
+		cashier.printReceipt();
 	}
 
 	private static void testBusinessDelegate() {
