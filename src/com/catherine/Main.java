@@ -27,6 +27,8 @@ import com.catherine.command.Dodge;
 import com.catherine.command.Jump;
 import com.catherine.composite.Employee;
 import com.catherine.composite_entity.Cashier;
+import com.catherine.data_access_object.BlacklistDAOImpl;
+import com.catherine.data_access_object.Contact;
 import com.catherine.decorator.AbstractDecorator;
 import com.catherine.decorator.Car;
 import com.catherine.decorator.StereoSystem;
@@ -113,7 +115,68 @@ public class Main {
 		// testVisitor();
 		// testMVC();
 		// testBusinessDelegate();
-		testCompositeEntity();
+		// testCompositeEntity();
+		testDAO();
+	}
+
+	private static void testDAO() {
+		BlacklistDAOImpl daoImpl = BlacklistDAOImpl.getInstance();
+		Contact contact1 = new Contact();
+		contact1.setName("Zhang-San");
+		contact1.setBlock(Contact.BLOCK_PHONE_CALL);
+
+		Contact contact2 = new Contact();
+		contact2.setName("Li-Si");
+		contact2.setBlock(Contact.BLOCK_PHONE_CALL | Contact.BLOCK_SMS);
+
+		Contact contact3 = new Contact();
+		contact3.setName("Wang-Wu");
+		contact3.setBlock(Contact.BLOCK_PHONE_CALL | Contact.BLOCK_SMS);
+
+		daoImpl.add(contact1);
+		daoImpl.add(contact2);
+		// daoImpl.add(contact3);
+		System.out.println(String.format("(%s)Add Zhang-San, Li-Si and Wang-Wu", Thread.currentThread().getName()));
+		List<Contact> blacklist = daoImpl.getBlacklist();
+		for (int i = 0; i < blacklist.size(); i++) {
+			System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));
+		}
+
+		// test multiple treads
+		Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				BlacklistDAOImpl daoImpl = BlacklistDAOImpl.getInstance();
+				Contact contact3 = new Contact();
+				contact3.setName("Wang-Wu");
+				contact3.setBlock(Contact.BLOCK_PHONE_CALL | Contact.BLOCK_SMS);
+				daoImpl.add(contact3);
+				System.out
+						.println(String.format("(%s)Add Wang-Wu in another thread", Thread.currentThread().getName()));
+				List<Contact> blacklist = daoImpl.getBlacklist();
+				for (int i = 0; i < blacklist.size(); i++) {
+					System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));
+				}
+			}
+		});
+		t.start();
+
+		Contact contact = blacklist.get(1);
+		System.out.println(String.format("(%s)Update Li-Si", Thread.currentThread().getName()));
+		contact.setName("Li-Si");
+		contact.setBlock(Contact.BLOCK_SMS);
+		daoImpl.update(contact);
+		blacklist = daoImpl.getBlacklist();
+		for (int i = 0; i < blacklist.size(); i++) {
+			System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));
+		}
+
+		System.out.println(String.format("(%s)Delete _id=2", Thread.currentThread().getName()));
+		daoImpl.delete(2);
+		blacklist = daoImpl.getBlacklist();
+		for (int i = 0; i < blacklist.size(); i++) {
+			System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));
+		}
 
 	}
 
@@ -121,7 +184,7 @@ public class Main {
 		Cashier cashier = new Cashier();
 		cashier.chectOut("white", "roast beef", "BBQ");
 		cashier.printReceipt();
-		
+
 		cashier.chectOut("honey oat", "meatball", "olive oil & salt");
 		cashier.printReceipt();
 	}

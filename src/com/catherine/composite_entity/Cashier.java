@@ -1,5 +1,11 @@
 package com.catherine.composite_entity;
 
+/**
+ * 举个例，bread, meat, sauce不能单独存在，必须三者合并成为hamburger才有意义，用组合实体模式进行hamburger的设置和引用。
+ * 
+ * @author Catherine
+ *
+ */
 public class Cashier {
 	private CompositeEntity entity;
 
