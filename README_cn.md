@@ -58,8 +58,8 @@
   the License.
   ```
 
-[runoob.com]:<https://www.tutorialspoint.com/design_pattern/index.htm>
-[]:<http://www.runoob.com/design-pattern/design-pattern-tutorial.html>
+[tutorialspoint]:<https://www.tutorialspoint.com/design_pattern/index.htm>
+[runoob.com]:<http://www.runoob.com/design-pattern/design-pattern-tutorial.html>
 [English]:<https://github.com/Catherine22/DesignPattern/blob/master/README.md>
 [LazyInitializingSingleton]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/singleton/LazyInitializingSingleton.java>
 [SafeLazyInitializingSingleton]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/singleton/SafeLazyInitializingSingleton.java>

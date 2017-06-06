@@ -13,6 +13,9 @@ import com.catherine.bridge.Hybids_N_Electric_Vehicle;
 import com.catherine.builder.OldStyleRobotBuilder;
 import com.catherine.builder.Robot;
 import com.catherine.builder.RobotDirector;
+import com.catherine.business_delegate.BusinessDelegate;
+import com.catherine.business_delegate.Client;
+import com.catherine.business_delegate.ServiceType;
 import com.catherine.chain_of_responsibility.DebugLogger;
 import com.catherine.chain_of_responsibility.ErrorLogger;
 import com.catherine.chain_of_responsibility.Logger;
@@ -107,8 +110,19 @@ public class Main {
 		// testStrategy();
 		// testTemplate();
 		// testVisitor();
-		testMVC();
+		// testMVC();
+		testBusinessDelegate();
 
+	}
+
+	private static void testBusinessDelegate() {
+		BusinessDelegate bd = new BusinessDelegate(ServiceType.EJB);
+		Client client = new Client(bd);
+		client.createTask();
+
+		bd = new BusinessDelegate(ServiceType.JMS);
+		client = new Client(bd);
+		client.createTask();
 	}
 
 	private static void testMVC() {
