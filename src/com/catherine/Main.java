@@ -45,6 +45,7 @@ import com.catherine.filter.criteria.CriteriaMarried;
 import com.catherine.filter.criteria.CriteriaSingle;
 import com.catherine.flyweight.Circle;
 import com.catherine.flyweight.ShapeFactory;
+import com.catherine.front_controller.FrontController;
 import com.catherine.interpreter.Expression;
 import com.catherine.interpreter.Toolkits;
 import com.catherine.iterator.Iterator;
@@ -118,7 +119,20 @@ public class Main {
 		// testBusinessDelegate();
 		// testCompositeEntity();
 		// testDAO();
-		testSynchronized();
+		// testSynchronized();
+		testFrontController();
+	}
+
+	private static void testFrontController() {
+		FrontController fController = new FrontController();
+		String token = null;
+		fController.dispatchView(token);
+		
+		token = fController.inputCaptcha("XI0dk3");
+		fController.dispatchView(token);
+		
+		token = fController.login("Oleg1234", "pw1234");
+		fController.dispatchView(token);
 	}
 
 	private static void testSynchronized() {

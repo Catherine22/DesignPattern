@@ -43,6 +43,7 @@
 ## 参考来源
 - [runoob.com]
 - [tutorialspoint]
+- [深入理解Java并发之synchronized实现原理]
 
 ## 开源授权协议
 
@@ -64,6 +65,7 @@
 
 [tutorialspoint]:<https://www.tutorialspoint.com/design_pattern/index.htm>
 [runoob.com]:<http://www.runoob.com/design-pattern/design-pattern-tutorial.html>
+[深入理解Java并发之synchronized实现原理]:<http://blog.csdn.net/javazejian/article/details/72828483>
 [English]:<https://github.com/Catherine22/DesignPattern/blob/master/README.md>
 [LazyInitializingSingleton]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/singleton/LazyInitializingSingleton.java>
 [SafeLazyInitializingSingleton]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/singleton/SafeLazyInitializingSingleton.java>

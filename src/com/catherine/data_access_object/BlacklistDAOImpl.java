@@ -12,7 +12,8 @@ import java.util.List;
  * 但是为了用单例模式解决多线程修改数据的问题直接省略<br>
  * 
  * 用singleton避免多线程操作数据库<br>
- * static synchronized可以保证无论有多少线程，同时只会有一个线程执行该方法
+ * static方法+synchronized代码块可以保证无论有多少线程，同时只会有一个线程执行该方法，
+ * 用同一把锁锁定代码块，可以保证同时只有一个线程执行一个代码块（多线程，多种方法做方法排程，一次只执行一种方法）
  * 
  * @author Catherine
  *
