@@ -9,6 +9,7 @@
 
 - 保证整个应用中某个实例只有一个，需考虑多线程的情形。
 - 根据不同的实现方式分成**懒汉模式**、**饿汉模式**、**枚举**和**内部静态类**。
+- 补充说明synchronized [SynchronizedSample]
 
 | 单例模式 | 多线程时是否重复创建单例对象 | 加载类的速度 | 运行时获取对象的速度 | 线程安全 | 代码链接 | 适用情形 | 其它 |
 | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -35,6 +36,9 @@
 制作[机器人]的步骤都一样（用[RobotBuilder]定义），所以两者只需要实现[RobotBuilder]接口，
 用户要生产时，直接和[RobotDirector]沟通即可，[RobotDirector]已经定义好制作机器人的流程。
 
+
+### 数据访问对象模式
+- 补充说明synchronized [SynchronizedSample]
 
 ## 参考来源
 - [runoob.com]
@@ -66,6 +70,7 @@
 [BillPughSingleton]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/singleton/BillPughSingleton.java>
 [EagerInitializingSingleton]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/singleton/EagerInitializingSingleton.java>
 [EnumSingleton]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/singleton/EnumSingleton.java>
+[SynchronizedSample]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/singleton/SynchronizedSample.java>
 [对象工厂]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/factory/ColorFactory.java>
 [颜色接口]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/factory/Color.java>
 [红色]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/factory/Red.java>
