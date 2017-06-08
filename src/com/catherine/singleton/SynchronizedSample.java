@@ -1,23 +1,24 @@
 package com.catherine.singleton;
 
 /**
- * Synchronized 示范
+ * synchronized 示范
  * 
  * @author Catherine
  *
  */
 public class SynchronizedSample {
-	private static SynchronizedSample syncInstance;
 	private static int p1;
 	private static int p2;
 	private static int p3;
 	private static int p4;
 	private static int p5;
 
+	private static class SynchronizedSampleHolder {
+		private static SynchronizedSample syncInstance = new SynchronizedSample();
+	}
+
 	public static SynchronizedSample getInstance() {
-		if (syncInstance == null)
-			syncInstance = new SynchronizedSample();
-		return syncInstance;
+		return SynchronizedSampleHolder.syncInstance;
 	}
 
 	/**
