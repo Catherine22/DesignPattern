@@ -33,78 +33,87 @@ public class BlacklistDAOImpl {
 		dbHelper.create();
 	}
 
-	public static synchronized List<Contact> getBlacklist() {
-		List<Contact> contacts = new LinkedList<>();
-		try {
-			ResultSet rs = dbHelper.getDatabase();
-			while (rs.next()) {
-				Contact contact = new Contact();
-				contact.setName(rs.getString("name"));
-				contact.setBlock(rs.getInt("block"));
-				contact.setID(rs.getInt("_id"));
-				contacts.add(contact);
+	public static List<Contact> getBlacklist() {
+		synchronized (BlacklistDAOImpl.getInstance()) {
+			List<Contact> contacts = new LinkedList<>();
+			try {
+				ResultSet rs = dbHelper.getDatabase();
+				while (rs.next()) {
+					Contact contact = new Contact();
+					contact.setName(rs.getString("name"));
+					contact.setBlock(rs.getInt("block"));
+					contact.setID(rs.getInt("_id"));
+					contacts.add(contact);
+				}
+				return contacts;
+			} catch (SQLException e) {
+				// if the error message is "out of memory",
+				// it probably means no database file is found
+				e.printStackTrace();
+				return null;
+			} finally {
+				dbHelper.disconnect();
 			}
-			return contacts;
-		} catch (SQLException e) {
-			// if the error message is "out of memory",
-			// it probably means no database file is found
-			e.printStackTrace();
-			return null;
-		} finally {
-			dbHelper.disconnect();
 		}
 	}
 
-	public static synchronized void add(Contact contact) {
-		try {
-			Statement statement = dbHelper.getStatement();
-			ResultSet rs = statement.executeQuery(String.format("select * from person where name='%s' and block=%d",
-					contact.getName(), contact.getBlock()));
-			if (!rs.next())// Avoid to add duplicates
-				statement.executeUpdate(String.format("insert into person values(%s, '%s', %d)", null,
+	public static void add(Contact contact) {
+		synchronized (BlacklistDAOImpl.getInstance()) {
+			try {
+				Statement statement = dbHelper.getStatement();
+				ResultSet rs = statement.executeQuery(String.format("select * from person where name='%s' and block=%d",
 						contact.getName(), contact.getBlock()));
-		} catch (SQLException e) {
-			// if the error message is "out of memory",
-			// it probably means no database file is found
-			e.printStackTrace();
-		} finally {
-			dbHelper.disconnect();
+				if (!rs.next())// Avoid to add duplicates
+					statement.executeUpdate(String.format("insert into person values(%s, '%s', %d)", null,
+							contact.getName(), contact.getBlock()));
+			} catch (SQLException e) {
+				// if the error message is "out of memory",
+				// it probably means no database file is found
+				e.printStackTrace();
+			} finally {
+				dbHelper.disconnect();
+			}
 		}
 	}
 
-	public static synchronized void update(Contact contact) {
-		try {
-			Statement statement = dbHelper.getStatement();
-			ResultSet rs = statement.executeQuery(String.format("select * from person where _id=%d", contact.getID()));
-			if (rs.next()) {
-				statement.executeUpdate(String.format("update person set name='%s', block=%d where _id=%d",
-						contact.getName(), contact.getBlock(), contact.getID()));
-			} else {
-				statement.executeUpdate(String.format("insert into person values(%s, '%s', %d)", null,
-						contact.getName(), contact.getBlock()));
+	public static void update(Contact contact) {
+		synchronized (BlacklistDAOImpl.getInstance()) {
+			try {
+				Statement statement = dbHelper.getStatement();
+				ResultSet rs = statement
+						.executeQuery(String.format("select * from person where _id=%d", contact.getID()));
+				if (rs.next()) {
+					statement.executeUpdate(String.format("update person set name='%s', block=%d where _id=%d",
+							contact.getName(), contact.getBlock(), contact.getID()));
+				} else {
+					statement.executeUpdate(String.format("insert into person values(%s, '%s', %d)", null,
+							contact.getName(), contact.getBlock()));
+				}
+			} catch (SQLException e) {
+				// if the error message is "out of memory",
+				// it probably means no database file is found
+				e.printStackTrace();
+			} finally {
+				dbHelper.disconnect();
 			}
-		} catch (SQLException e) {
-			// if the error message is "out of memory",
-			// it probably means no database file is found
-			e.printStackTrace();
-		} finally {
-			dbHelper.disconnect();
 		}
 	}
 
-	public static synchronized void delete(int ID) {
-		try {
-			Statement statement = dbHelper.getStatement();
-			ResultSet rs = statement.executeQuery(String.format("select * from person where _id=%d", ID));
-			if (rs.next()) {
-				statement.executeUpdate(String.format("delete from person where _id=%d", ID));
+	public static void delete(int ID) {
+		synchronized (BlacklistDAOImpl.getInstance()) {
+			try {
+				Statement statement = dbHelper.getStatement();
+				ResultSet rs = statement.executeQuery(String.format("select * from person where _id=%d", ID));
+				if (rs.next()) {
+					statement.executeUpdate(String.format("delete from person where _id=%d", ID));
+				}
+			} catch (SQLException e) {
+				// if the error message is "out of memory",
+				// it probably means no database file is found
+				e.printStackTrace();
+			} finally {
+				dbHelper.disconnect();
 			}
-		} catch (SQLException e) {
-			// if the error message is "out of memory",
-			// it probably means no database file is found
-			e.printStackTrace();
-		} finally {
-			dbHelper.disconnect();
 		}
 	}
 

@@ -68,6 +68,7 @@ import com.catherine.singleton.EagerInitializingSingleton;
 import com.catherine.singleton.EnumSingleton;
 import com.catherine.singleton.LazyInitializingSingleton;
 import com.catherine.singleton.SafeLazyInitializingSingleton;
+import com.catherine.singleton.SynchronizedSample;
 import com.catherine.state.Gear;
 import com.catherine.state.Gear1;
 import com.catherine.state.Gear2;
@@ -116,7 +117,17 @@ public class Main {
 		// testMVC();
 		// testBusinessDelegate();
 		// testCompositeEntity();
-		testDAO();
+		// testDAO();
+		testSynchronized();
+	}
+
+	private static void testSynchronized() {
+		SynchronizedSample ss = new SynchronizedSample();
+		ss.testStaticParamsAsUsual();
+		ss.testStaticParams();
+		ss.testStaticParamsFromDifferentObj();
+		ss.testStaticMethod();
+		ss.testStaticMethodAndSyncCodes();
 	}
 
 	private static void testDAO() {
