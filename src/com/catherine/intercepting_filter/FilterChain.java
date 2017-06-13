@@ -21,6 +21,7 @@ public class FilterChain {
 				next = false;
 		}
 
+		// 通常是放滤后的数据的处理逻辑
 		if (next) {
 			System.out.println(String.format("Member:%s", info.getName()));
 			if (info.getLevel() == Level.PRIMIUM)

@@ -72,6 +72,9 @@ import com.catherine.prototype.Color;
 import com.catherine.prototype.ColorCache;
 import com.catherine.prototype.Type;
 import com.catherine.proxy.ImageLoaderProxy;
+import com.catherine.service_locator.PlaylistService;
+import com.catherine.service_locator.Service;
+import com.catherine.service_locator.ServiceLocator;
 import com.catherine.singleton.BillPughSingleton;
 import com.catherine.singleton.EagerInitializingSingleton;
 import com.catherine.singleton.EnumSingleton;
@@ -129,7 +132,22 @@ public class Main {
 		// testDAO();
 		// testSynchronized();
 		// testFrontController();
-		testInterceptingFilter();
+		// testInterceptingFilter();
+		testServiceLocator();
+	}
+
+	private static void testServiceLocator() {
+		ServiceLocator s1 = new ServiceLocator();
+		Service pService1 = s1.lookup("playlist");
+		Service hService1 = s1.lookup("history");
+		System.out.println(pService1.response(1));
+		System.out.println(hService1.response(1));
+		
+		ServiceLocator s2 = new ServiceLocator();
+		Service pService2 = s2.lookup("playlist");
+		Service hService2 = s2.lookup("history");
+		System.out.println(pService2.response(2));
+		System.out.println(hService2.response(2));
 	}
 
 	private static void testInterceptingFilter() {
