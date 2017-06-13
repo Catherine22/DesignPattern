@@ -46,6 +46,14 @@ import com.catherine.filter.criteria.CriteriaSingle;
 import com.catherine.flyweight.Circle;
 import com.catherine.flyweight.ShapeFactory;
 import com.catherine.front_controller.FrontController;
+import com.catherine.intercepting_filter.Country;
+import com.catherine.intercepting_filter.CountryFilter;
+import com.catherine.intercepting_filter.DebuggerFilter;
+import com.catherine.intercepting_filter.FilterManager;
+import com.catherine.intercepting_filter.LevelFilter;
+import com.catherine.intercepting_filter.MusicPlayer;
+import com.catherine.intercepting_filter.member.Level;
+import com.catherine.intercepting_filter.member.MemberInfo;
 import com.catherine.interpreter.Expression;
 import com.catherine.interpreter.Toolkits;
 import com.catherine.iterator.Iterator;
@@ -120,17 +128,56 @@ public class Main {
 		// testCompositeEntity();
 		// testDAO();
 		// testSynchronized();
-		testFrontController();
+		// testFrontController();
+		testInterceptingFilter();
+	}
+
+	private static void testInterceptingFilter() {
+		MemberInfo user1 = new MemberInfo();
+		user1.setID(1);
+		user1.setLevel(Level.BASIC);
+		user1.setName("0001");
+		user1.setCountry(Country.US);
+
+		MemberInfo user2 = new MemberInfo();
+		user2.setID(2);
+		user2.setLevel(Level.BASIC);
+		user2.setName("0002");
+		user2.setCountry(Country.UK);
+
+		MemberInfo user3 = new MemberInfo();
+		user3.setID(3);
+		user3.setLevel(Level.STANDARD);
+		user3.setName("0003");
+		user3.setCountry(Country.US);
+
+		MemberInfo user4 = new MemberInfo();
+		user4.setID(4);
+		user4.setLevel(Level.PRIMIUM);
+		user4.setName("0004");
+		user4.setCountry(Country.UK);
+
+		MemberInfo[] infos = new MemberInfo[] { user1, user2, user3, user4 };
+		MusicPlayer player = new MusicPlayer();
+		FilterManager fm = new FilterManager();
+		fm.addFilter(new LevelFilter(Level.BASIC));
+		fm.addFilter(new CountryFilter(Country.UK));
+		// fm.addFilter(new DebuggerFilter());
+		for (int i = 0; i < infos.length; i++) {
+			List<String> playlist = player.getArtist(fm, infos[i]);
+			if (playlist.size() != 0)
+				System.out.println(playlist);
+		}
 	}
 
 	private static void testFrontController() {
 		FrontController fController = new FrontController();
 		String token = null;
 		fController.dispatchView(token);
-		
+
 		token = fController.inputCaptcha("XI0dk3");
 		fController.dispatchView(token);
-		
+
 		token = fController.login("Oleg1234", "pw1234");
 		fController.dispatchView(token);
 	}

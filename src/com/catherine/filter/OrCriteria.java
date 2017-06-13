@@ -1,6 +1,5 @@
 package com.catherine.filter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.catherine.filter.criteria.Criteria;

@@ -9,7 +9,7 @@
 
 - 保证整个应用中某个实例只有一个，需考虑多线程的情形。
 - 根据不同的实现方式分成**懒汉模式**、**饿汉模式**、**枚举**和**内部静态类**。
-- 补充说明synchronized [SynchronizedSample]
+- 补充说明synchronized，详见[SynchronizedSample]
 
 | 单例模式 | 多线程时是否重复创建单例对象 | 加载类的速度 | 运行时获取对象的速度 | 线程安全 | 代码链接 | 适用情形 | 其它 |
 | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -38,7 +38,7 @@
 
 
 ### 数据访问对象模式
-- 补充说明synchronized [SynchronizedSample]
+- 补充说明synchronized，详见[SynchronizedSample]
 
 ## 参考来源
 - [runoob.com]
