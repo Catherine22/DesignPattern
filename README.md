@@ -25,5 +25,9 @@
   the License.
   ```
 
-[tutorialspoint]:<https://www.tutorialspoint.com/design_pattern/index.htm>
-[中文版]:<https://github.com/Catherine22/DesignPattern/blob/master/README_cn.md>
+  [tutorialspoint]:<https://www.tutorialspoint.com/design_pattern/index.htm>
+  [runoob.com]:<http://www.runoob.com/design-pattern/design-pattern-tutorial.html>
+  [深入理解Java并发之synchronized实现原理]:<http://blog.csdn.net/javazejian/article/details/72828483>
+  [English]:<https://github.com/Catherine22/DesignPattern/blob/master/README.md>
+  [Singleton Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/singleton/>
+  [Factory Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/factory/>
