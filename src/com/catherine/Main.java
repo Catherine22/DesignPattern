@@ -91,6 +91,7 @@ import com.catherine.strategy.OperationMultiply;
 import com.catherine.strategy.OperationSubstract;
 import com.catherine.template.Blizzard;
 import com.catherine.template.Supercell;
+import com.catherine.transfer_object.Studio;
 import com.catherine.visitor.AccessLevel;
 import com.catherine.visitor.PrivateLevel;
 import com.catherine.visitor.ProtectedLevel;
@@ -133,7 +134,38 @@ public class Main {
 		// testSynchronized();
 		// testFrontController();
 		// testInterceptingFilter();
-		testServiceLocator();
+		// testServiceLocator();
+		testTransferObject();
+	}
+
+	private static void testTransferObject() {
+		com.catherine.transfer_object.Employee Thomos = new com.catherine.transfer_object.Employee();
+		Thomos.setID(1);
+		Thomos.setName("Thomos");
+		Thomos.setDept("Present");
+
+		com.catherine.transfer_object.Employee Jeff = new com.catherine.transfer_object.Employee();
+		Jeff.setID(2);
+		Jeff.setName("Jeff");
+		Jeff.setDept("Director");
+
+		com.catherine.transfer_object.Employee Jonas = new com.catherine.transfer_object.Employee();
+		Jonas.setID(3);
+		Jonas.setName("Jonas");
+		Jonas.setDept("Marketing");
+		Studio studio = new Studio();
+		studio.addEmployee(Thomos);
+		studio.addEmployee(Jeff);
+		studio.addEmployee(Jonas);
+		studio.showAllStuff();
+
+		System.out.println("update Jonas");
+		studio.updateEmployee(3, "Head marketing");
+		studio.showAllStuff();
+
+		System.out.println("fire Thomos");
+		studio.fireEmployee(1);
+		studio.showAllStuff();
 	}
 
 	private static void testServiceLocator() {
@@ -142,7 +174,7 @@ public class Main {
 		Service hService1 = s1.lookup("history");
 		System.out.println(pService1.response(1));
 		System.out.println(hService1.response(1));
-		
+
 		ServiceLocator s2 = new ServiceLocator();
 		Service pService2 = s2.lookup("playlist");
 		Service hService2 = s2.lookup("history");
