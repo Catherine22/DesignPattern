@@ -587,14 +587,14 @@ public class Main {
 	private static void testBridge() {
 		BuyerSGuide bSGuide = new BuyerSGuide(new Hybids_N_Electric_Vehicle(), new Black());
 		bSGuide.addToCart();
-	};
+	}
 
 	private static void testAdapter() {
 		MediaPlayer pc = new Computer();
 		pc.play();
 		MediaPlayer br = new Blu_ray_disc_player();
 		br.play();
-	};
+	}
 
 	private static void testPrototype() {
 		try {

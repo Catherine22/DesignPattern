@@ -6,7 +6,6 @@
 ## 说明
 
 ### [单例模式]
-
 - 保证整个应用中某个实例只有一个，需考虑多线程的情形。
 - 根据不同的实现方式分成**懒汉模式**、**饿汉模式**、**枚举**和**内部静态类**。
 - 补充说明synchronized，详见[SynchronizedSample]
@@ -83,10 +82,10 @@ private static void testSingleton() {
 
 ```Java
 private static void testFactory() {
-		ColorFactory cf = new ColorFactory();
-		cf.getColor(ColorFactory.BLUE).onDraw();
-		cf.getColor(ColorFactory.RED).onDraw();
-	}
+  ColorFactory cf = new ColorFactory();
+  cf.getColor(ColorFactory.BLUE).onDraw();
+  cf.getColor(ColorFactory.RED).onDraw();
+}
 ```
 
 ### [抽象工厂模式]
@@ -95,10 +94,10 @@ private static void testFactory() {
 
 ```Java
 private static void testAbstractFactory() {
-		CarFactory cf = new CarFactory();
-		cf.getColor(CarFactory.RED).onDraw();
-		cf.getBrand(CarFactory.BENTLEY).show();
-	}
+  CarFactory cf = new CarFactory();
+  cf.getColor(CarFactory.RED).onDraw();
+  cf.getBrand(CarFactory.BENTLEY).show();
+}
 ```
 
 ### [建造者模式]
@@ -109,14 +108,14 @@ private static void testAbstractFactory() {
 
 ```Java
 private static void testBuilder() {
-		RobotDirector rd = new RobotDirector(new OldStyleRobotBuilder());
-		rd.makeRobot();
-		Robot robot = rd.getRobot();
-		System.out.println("Builder\t" + robot.getArms());
-		System.out.println("Builder\t" + robot.getHead());
-		System.out.println("Builder\t" + robot.getLegs());
-		System.out.println("Builder\t" + robot.getTorso());
-	}
+  RobotDirector rd = new RobotDirector(new OldStyleRobotBuilder());
+  rd.makeRobot();
+  Robot robot = rd.getRobot();
+  System.out.println("Builder\t" + robot.getArms());
+  System.out.println("Builder\t" + robot.getHead());
+  System.out.println("Builder\t" + robot.getLegs());
+  System.out.println("Builder\t" + robot.getTorso());
+}
 ```
 
 ### [原型模式]
@@ -126,21 +125,21 @@ private static void testBuilder() {
 
 ```Java
 private static void testPrototype() {
-		try {
-			ColorCache colorCache = new ColorCache();
-			Color blue = colorCache.getColor(Type.BLUE);
-			blue.printID();
-			Color red1 = colorCache.getColor(Type.RED);
-			red1.printID();
-			Color red2 = colorCache.getColor(Type.RED);
-			red2.resetID();
-			red2.printID();
-			System.out.println(red1);
-			System.out.println(red2);
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-	}
+  try {
+    ColorCache colorCache = new ColorCache();
+    Color blue = colorCache.getColor(Type.BLUE);
+    blue.printID();
+    Color red1 = colorCache.getColor(Type.RED);
+    red1.printID();
+    Color red2 = colorCache.getColor(Type.RED);
+    red2.resetID();
+    red2.printID();
+    System.out.println(red1);
+    System.out.println(red2);
+  } catch (CloneNotSupportedException e) {
+    e.printStackTrace();
+  }
+}
 ```
 
 ### [适配器模式]
@@ -148,11 +147,11 @@ private static void testPrototype() {
 
 ```Java
 private static void testAdapter() {
-		MediaPlayer pc = new Computer();
-		pc.play();
-		MediaPlayer br = new Blu_ray_disc_player();
-		br.play();
-	};
+  MediaPlayer pc = new Computer();
+  pc.play();
+  MediaPlayer br = new Blu_ray_disc_player();
+  br.play();
+}
 ```
 
 ### [桥接模式]
@@ -160,9 +159,9 @@ private static void testAdapter() {
 
 ```Java
 private static void testBridge() {
-		BuyerSGuide bSGuide = new BuyerSGuide(new Hybids_N_Electric_Vehicle(), new Black());
-		bSGuide.addToCart();
-	};
+  BuyerSGuide bSGuide = new BuyerSGuide(new Hybids_N_Electric_Vehicle(), new Black());
+  bSGuide.addToCart();
+}
 ```
 
 ### [过滤器模式]
@@ -170,51 +169,51 @@ private static void testBridge() {
 
 ```Java
 private static void testFilter() {
-		List<Person> persons = new ArrayList<>();
-		persons.add(new Person("Robert", "Male", "Single"));
-		persons.add(new Person("John", "Male", "Married"));
-		persons.add(new Person("Laura", "Female", "Married"));
-		persons.add(new Person("Diana", "Female", "Single"));
-		persons.add(new Person("Mike", "Male", "Single"));
-		persons.add(new Person("Bobby", "Male", "Single"));
+  List<Person> persons = new ArrayList<>();
+  persons.add(new Person("Robert", "Male", "Single"));
+  persons.add(new Person("John", "Male", "Married"));
+  persons.add(new Person("Laura", "Female", "Married"));
+  persons.add(new Person("Diana", "Female", "Single"));
+  persons.add(new Person("Mike", "Male", "Single"));
+  persons.add(new Person("Bobby", "Male", "Single"));
 
-		Criteria single = new CriteriaSingle();
-		System.out.println("Single:" + single.meetCriteria(persons));
-		Criteria women = new CriteriaFemale();
-		System.out.println("Women:" + women.meetCriteria(persons));
-		Criteria singleWomen = new AndCriteria(single, women);
-		System.out.println("Single Women:" + singleWomen.meetCriteria(persons));
+  Criteria single = new CriteriaSingle();
+  System.out.println("Single:" + single.meetCriteria(persons));
+  Criteria women = new CriteriaFemale();
+  System.out.println("Women:" + women.meetCriteria(persons));
+  Criteria singleWomen = new AndCriteria(single, women);
+  System.out.println("Single Women:" + singleWomen.meetCriteria(persons));
 
-		Criteria married = new CriteriaMarried();
-		System.out.println("Married:" + married.meetCriteria(persons));
-		Criteria men = new CriteriaMale();
-		System.out.println("Men:" + men.meetCriteria(persons));
-		Criteria marriedOrMen = new OrCriteria(married, men);
-		System.out.println("Married or Men:" + marriedOrMen.meetCriteria(persons));
-	}
+  Criteria married = new CriteriaMarried();
+  System.out.println("Married:" + married.meetCriteria(persons));
+  Criteria men = new CriteriaMale();
+  System.out.println("Men:" + men.meetCriteria(persons));
+  Criteria marriedOrMen = new OrCriteria(married, men);
+  System.out.println("Married or Men:" + marriedOrMen.meetCriteria(persons));
+}
 ```
 
 ### [组合模式]
-- 简言之，树状结构，用List<List>实现。
+- 简言之，树状结构，用List <List>实现。
 
 ```Java
 public static void testComposite() {
-		Employee ceo = new Employee("Catherine", "CEO", 100000);
-		Employee headSales = new Employee("Conan", "Head sales", 80000);
-		Employee headMarketing = new Employee("Jordan", "Head marketing", 80000);
-		Employee sales1 = new Employee("Elsa", "Sales", 40000);
-		Employee sales2 = new Employee("Anna", "Sales", 40000);
-		Employee marketing = new Employee("Laura", "Marketing", 40000);
+  Employee ceo = new Employee("Catherine", "CEO", 100000);
+  Employee headSales = new Employee("Conan", "Head sales", 80000);
+  Employee headMarketing = new Employee("Jordan", "Head marketing", 80000);
+  Employee sales1 = new Employee("Elsa", "Sales", 40000);
+  Employee sales2 = new Employee("Anna", "Sales", 40000);
+  Employee marketing = new Employee("Laura", "Marketing", 40000);
 
-		ceo.add(headMarketing);
-		ceo.add(headSales);
-		headMarketing.add(marketing);
-		headSales.add(sales1);
-		headSales.add(sales2);
-		System.out.println("CEO's subordinates:" + ceo.getSubordinates());
-		System.out.println("headSales' subordinates:" + headSales.getSubordinates());
-		System.out.println("headMarketing's subordinates:" + headMarketing.getSubordinates());
-	}
+  ceo.add(headMarketing);
+  ceo.add(headSales);
+  headMarketing.add(marketing);
+  headSales.add(sales1);
+  headSales.add(sales2);
+  System.out.println("CEO's subordinates:" + ceo.getSubordinates());
+  System.out.println("headSales' subordinates:" + headSales.getSubordinates());
+  System.out.println("headMarketing's subordinates:" + headMarketing.getSubordinates());
+}
 ```
 
 ### [装饰器模式]
@@ -223,23 +222,23 @@ public static void testComposite() {
 
 ```Java
 private static void testDecorator() {
-		Car tesla = new Tesla();
-		tesla.show();
-		System.out.print("normal Stereo System,\t");
-		System.out.print("normal Wheels,\t");
-		System.out.print("\n");
-		AbstractDecorator teslaWithNewStereo = new StereoSystem(tesla);
-		teslaWithNewStereo.show();
-		System.out.print("normal Wheels,\t");
-		System.out.print("\n");
-		AbstractDecorator teslaWithNewWheels = new Wheels(tesla);
-		teslaWithNewWheels.show();
-		System.out.print("normal Stereo System,\t");
-		System.out.print("\n");
-		AbstractDecorator teslaWithNewWheelsNStereo = new Wheels(teslaWithNewStereo);
-		teslaWithNewWheelsNStereo.show();
-		System.out.print("\n");
-	}
+  Car tesla = new Tesla();
+  tesla.show();
+  System.out.print("normal Stereo System,\t");
+  System.out.print("normal Wheels,\t");
+  System.out.print("\n");
+  AbstractDecorator teslaWithNewStereo = new StereoSystem(tesla);
+  teslaWithNewStereo.show();
+  System.out.print("normal Wheels,\t");
+  System.out.print("\n");
+  AbstractDecorator teslaWithNewWheels = new Wheels(tesla);
+  teslaWithNewWheels.show();
+  System.out.print("normal Stereo System,\t");
+  System.out.print("\n");
+  AbstractDecorator teslaWithNewWheelsNStereo = new Wheels(teslaWithNewStereo);
+  teslaWithNewWheelsNStereo.show();
+  System.out.print("\n");
+}
 ```
 
 ### [外观模式]
@@ -248,10 +247,10 @@ private static void testDecorator() {
 
 ```Java
 private static void testFacade() {
-		com.catherine.facade.CarFactory cFactory = new com.catherine.facade.CarFactory();
-		cFactory.buildCoupe();
-		cFactory.buildConvertible();
-	}
+  com.catherine.facade.CarFactory cFactory = new com.catherine.facade.CarFactory();
+  cFactory.buildCoupe();
+  cFactory.buildConvertible();
+}
 ```
 
 ### [享元模式]
@@ -260,16 +259,16 @@ private static void testFacade() {
 
 ```Java
 private static void testFlyweight() {
-		final String[] colors = { "BLUE", "BLACK", "YELLOW", "GREEN", "WHITE" };
-		ShapeFactory sf = new ShapeFactory();
-		// 随机产生20个圆
-		for (int i = 0; i < 20; i++) {
-			Circle circle = sf.getCircle(colors[(int) (Math.random() * colors.length)]);
-			circle.setRadius((int) (Math.random() * 100));
-			circle.draw();
-		}
-		sf.debug();
-	}
+  final String[] colors = { "BLUE", "BLACK", "YELLOW", "GREEN", "WHITE" };
+  ShapeFactory sf = new ShapeFactory();
+  // 随机产生20个圆
+  for (int i = 0; i < 20; i++) {
+    Circle circle = sf.getCircle(colors[(int) (Math.random() * colors.length)]);
+    circle.setRadius((int) (Math.random() * 100));
+    circle.draw();
+  }
+  sf.debug();
+}
 ```
 
 ### [代理模式]
@@ -277,10 +276,10 @@ private static void testFlyweight() {
 
 ```Java
 private static void testProxy() {
-		ImageLoaderProxy imageLoader = new ImageLoaderProxy();
-		imageLoader.display();
-		imageLoader.display();
-	}
+  ImageLoaderProxy imageLoader = new ImageLoaderProxy();
+  imageLoader.display();
+  imageLoader.display();
+}
 ```
 
 ### [责任链模式]
@@ -303,134 +302,425 @@ private static void testChainOfResponsibility() {
 ```
 
 ### [命令模式]
-- 比如我定义一个[Command]接口，让[Attack]和[Jump]等等实现，再通过[Controller]调度。
+- 比如定义一个[Command]接口，让[Attack]和[Jump]等等实现，再通过[Controller]调度。
 
 ```Java
 private static void testCommand() {
-		Command attack = new Attack();
-		Command jump = new Jump();
-		Command dodge = new Dodge();
+  Command attack = new Attack();
+  Command jump = new Jump();
+  Command dodge = new Dodge();
 
-		Controller controller = new Controller();
-		System.out.print("Command: roll: ");
-		controller.add(dodge);
-		controller.add(jump);
-		controller.combos();
+  Controller controller = new Controller();
+  System.out.print("Command: roll: ");
+  controller.add(dodge);
+  controller.add(jump);
+  controller.combos();
 
-		System.out.print("Command: aerial dash attack: ");
-		controller.add(jump);
-		controller.add(attack);
-		controller.combos();
-	}
+  System.out.print("Command: aerial dash attack: ");
+  controller.add(jump);
+  controller.add(attack);
+  controller.combos();
+}
 ```
 
 ### [解释器模式]
+- 用户输入代码后，通过Interpreter模式来处理，执行相应的功能。
+- 可应用于处理SQL指令。
+- 举例来说，要做一个可以处理英语句子的解释器。定义一个[Expression]接口，分别由[TerminalExpression]、[AndExpression]和[OrExpression]实现，这些是运算逻辑，接着再[Toolkits]定义规则，输入一串句子后，就能用Toolkits订的规则处理（基于稍早定义的运算逻辑）。
 
 ```Java
+private static void testInterpreter() {
+  Toolkits toolkits = new Toolkits();
+  Expression q1 = toolkits.getStates();
+  Expression q2 = toolkits.getVotingLimitation();
+  System.out.println("Interpreter: Is Beijing one of a state in the United States? " + q1.interpret("Beijing"));
+  System.out.println("Interpreter: Is Florida one of a state in the United States? " + q1.interpret("Florida"));
 
+  System.out.println("Interpreter: Am I eligible to vote? " + q2.interpret("I am a kid"));
+  System.out.println(
+      "Interpreter: Is Mom eligible to vote? " + q2.interpret("She is adult and she is a U.S. citizen"));
+}
 ```
 
 ### [迭代器模式]
 
 ```Java
-
+private static void testIterator() {
+  Sequence sequence = new Sequence();
+  System.out.print("Iterator: ");
+  for (Iterator iterator = sequence.getIterator(); iterator.hasNext();)
+    System.out.print(iterator.next() + " ");
+  System.out.print("\n");
+}
 ```
 
 ### [中介者模式]
+- 原本是Main直接和[ChatRoom]通信，在中介者模式中加入一个中介者[User]避免上述两者直接沟通，好处是能把沟通的行为给封装，并且未来在代码维护时，可能比较不会改动到另一方。
 
 ```Java
-
+private static void testMediator() {
+  User user = new User("A001", "Sev");
+  user.sendMessage("Hi there.");
+}
 ```
 
 ### [备忘录模式]
 
 ```Java
+private static void testMemento() {
+  Settings settings = new Settings();
 
+  World village1 = new World();
+  village1.setAmmo("Hunter arrow");
+  village1.setWeapon("Sharpshot bow");
+  village1.setXP(10000);
+  village1.setOutfit("Noar survivor");
+  settings.save(village1.getState());
+  System.out.println(settings.load());
+
+  World village2 = new World();
+  village2.setAmmo("Fire arrow");
+  village2.setWeapon("War bow");
+  village2.setXP(20000);
+  village2.setOutfit("Shield weaver");
+  settings.save(village2.getState());
+  System.out.println(settings.load());
+}
 ```
 
 ### [观察者模式]
 
 ```Java
+private static void testObserver() {
+  BroadcastManager manager = new BroadcastManager();
+  new BinaryObserver(manager);
+  new HexObserver(manager);
+  new OctalObserver(manager);
+  manager.setState(17);
+  manager.setState(300);
+}
+```
+### [观察者模式改]
 
+```Java
+private static void testObserverPlus() {
+  com.catherine.observer_premium.BroadcastManager manager = new com.catherine.observer_premium.BroadcastManager();
+  manager.register(new Receiver() {
+
+    @Override
+    public void onReceive(String content) {
+      System.out.println(String.format("Observer plus: (Main1)%s", content));
+    }
+  });
+  manager.register(new Receiver() {
+
+    @Override
+    public void onReceive(String content) {
+      System.out.println(String.format("Observer plus: (Main2)%s", content));
+    }
+  });
+  ObserverPlusTest observerPlusTest = new ObserverPlusTest();
+  observerPlusTest.registerReceiver();
+  manager.sendMessage("Wake up!");
+
+  observerPlusTest.unregisterReceiver();
+  manager.sendMessage("Hurry!");
+}
 ```
 
 ### [状态模式]
 
 ```Java
+private static void testState() {
+  Gear g = new Gear1();
+  System.out.println(g.getState());
 
+  g = new Gear2();
+  System.out.println(g.getState());
+
+  g = new GearR();
+  System.out.println(g.getState());
+}
 ```
 
 ### [空对象模式]
 
 ```Java
+private static void testNullObject() {
+  IDChecker idChecker = new IDChecker();
+  System.out.println(idChecker.getName("12351"));
+  System.out.println(idChecker.getName("10000"));
+  System.out.println(idChecker.getName("62343"));
+  System.out.println(idChecker.getName("20000"));
+  System.out.println(idChecker.getName("34261"));
 
+}
 ```
 
 ### [策略模式]
 
 ```Java
+private static void testStrategy() {
+  Calculator calculator = new Calculator(new OperationAdd());
+  System.out.println("4 + 5 = " + calculator.execute(4, 5));
 
+  calculator = new Calculator(new OperationSubstract());
+  System.out.println("4 - 5 = " + calculator.execute(4, 5));
+
+  calculator = new Calculator(new OperationMultiply());
+  System.out.println("4 * 5 = " + calculator.execute(4, 5));
+}
 ```
 
 ### [模板模式]
 
 ```Java
+private static void testTemplate() {
+  Supercell supercell = new Supercell();
+  supercell.buyAds();
 
+  System.out.println("");
+
+  Blizzard blizzard = new Blizzard();
+  blizzard.buyAds();
+}
 ```
 
 ### [访问者模式]
 
 ```Java
+private static void testVisitor() {
+  System.out.println("Private");
+  AccessLevel level = new PrivateLevel();
+  level.showInfo(new RetrieveMethod());
 
+  System.out.println("Protected");
+  level = new ProtectedLevel();
+  level.showInfo(new RetrieveMethod());
+
+  System.out.println("Public");
+  level = new PublicLevel();
+  level.showInfo(new RetrieveMethod());
+}
 ```
 
 ### [MVC 模式]
 
 ```Java
+private static void testMVC() {
+  RetrieveCouponFromDB rc = new RetrieveCouponFromDB();
+  rc.downloadCoupons();
 
+  // click an item
+  String ID = "0001";
+  rc.downloadCouponDetail(ID);
+
+  // refresh
+  rc.downloadCoupons();
+
+  // click an item
+  ID = "0002";
+  rc.downloadCouponDetail(ID);
+}
 ```
 
 ### [业务代表模式]
 
 ```Java
+private static void testBusinessDelegate() {
+  BusinessDelegate bd = new BusinessDelegate(ServiceType.EJB);
+  Client client = new Client(bd);
+  client.createTask();
 
+  bd = new BusinessDelegate(ServiceType.JMS);
+  client = new Client(bd);
+  client.createTask();
+}
 ```
 
 ### [组合实体模式]
 
 ```Java
+private static void testCompositeEntity() {
+  Cashier cashier = new Cashier();
+  cashier.chectOut("white", "roast beef", "BBQ");
+  cashier.printReceipt();
 
+  cashier.chectOut("honey oat", "meatball", "olive oil & salt");
+  cashier.printReceipt();
+}
 ```
 
 ### [数据访问对象模式]
 - 补充说明synchronized，详见[SynchronizedSample]
 
 ```Java
+private static void testDAO() {
+  BlacklistDAOImpl.getInstance();
+  Contact contact1 = new Contact();
+  contact1.setName("Zhang-San");
+  contact1.setBlock(Contact.BLOCK_PHONE_CALL);
 
+  Contact contact2 = new Contact();
+  contact2.setName("Li-Si");
+  contact2.setBlock(Contact.BLOCK_PHONE_CALL | Contact.BLOCK_SMS);
+
+  BlacklistDAOImpl.add(contact1);
+  BlacklistDAOImpl.add(contact2);
+  System.out.println(String.format("(%s)Add Zhang-San and Li-Si", Thread.currentThread().getName()));
+  List<Contact> blacklist = BlacklistDAOImpl.getBlacklist();
+  for (int i = 0; i < blacklist.size(); i++) {
+    System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));
+  }
+
+  // test multiple treads
+  Thread t = new Thread(new Runnable() {
+    @Override
+    public void run() {
+      BlacklistDAOImpl.getInstance();
+      Contact contact3 = new Contact();
+      contact3.setName("Wang-Wu");
+      contact3.setBlock(Contact.BLOCK_PHONE_CALL | Contact.BLOCK_SMS);
+      BlacklistDAOImpl.add(contact3);
+      System.out
+          .println(String.format("(%s)Add Wang-Wu in another thread", Thread.currentThread().getName()));
+      List<Contact> blacklist = BlacklistDAOImpl.getBlacklist();
+      for (int i = 0; i < blacklist.size(); i++) {
+        System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));
+      }
+    }
+  });
+  t.start();
+
+  Contact contact = blacklist.get(1);
+  System.out.println(String.format("(%s)Update Li-Si", Thread.currentThread().getName()));
+  contact.setName("Li-Si");
+  contact.setBlock(Contact.BLOCK_SMS);
+  BlacklistDAOImpl.update(contact);
+  blacklist = BlacklistDAOImpl.getBlacklist();
+  for (int i = 0; i < blacklist.size(); i++) {
+    System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));
+  }
+
+  blacklist = BlacklistDAOImpl.getBlacklist();
+  System.out.println(
+      String.format("(%s)Delete _id=%d", Thread.currentThread().getName(), blacklist.get(1).getID()));
+  BlacklistDAOImpl.delete(blacklist.get(1).getID());
+  blacklist = BlacklistDAOImpl.getBlacklist();
+  for (int i = 0; i < blacklist.size(); i++) {
+    System.out.println(String.format("(%s)%s", Thread.currentThread().getName(), blacklist.get(i)));
+  }
+}
 ```
 
 ### [前端控制器模式]
 
 ```Java
+private static void testFrontController() {
+  FrontController fController = new FrontController();
+  String token = null;
+  fController.dispatchView(token);
 
+  token = fController.inputCaptcha("XI0dk3");
+  fController.dispatchView(token);
+
+  token = fController.login("Oleg1234", "pw1234");
+  fController.dispatchView(token);
+}
 ```
 
 ### [拦截过滤器模式]
 
 ```Java
+private static void testInterceptingFilter() {
+  MemberInfo user1 = new MemberInfo();
+  user1.setID(1);
+  user1.setLevel(Level.BASIC);
+  user1.setName("0001");
+  user1.setCountry(Country.US);
 
+  MemberInfo user2 = new MemberInfo();
+  user2.setID(2);
+  user2.setLevel(Level.BASIC);
+  user2.setName("0002");
+  user2.setCountry(Country.UK);
+
+  MemberInfo user3 = new MemberInfo();
+  user3.setID(3);
+  user3.setLevel(Level.STANDARD);
+  user3.setName("0003");
+  user3.setCountry(Country.US);
+
+  MemberInfo user4 = new MemberInfo();
+  user4.setID(4);
+  user4.setLevel(Level.PRIMIUM);
+  user4.setName("0004");
+  user4.setCountry(Country.UK);
+
+  MemberInfo[] infos = new MemberInfo[] { user1, user2, user3, user4 };
+  MusicPlayer player = new MusicPlayer();
+  FilterManager fm = new FilterManager();
+  fm.addFilter(new LevelFilter(Level.BASIC));
+  fm.addFilter(new CountryFilter(Country.UK));
+  // fm.addFilter(new DebuggerFilter());
+  for (int i = 0; i < infos.length; i++) {
+    List<String> playlist = player.getArtist(fm, infos[i]);
+    if (playlist.size() != 0)
+      System.out.println(playlist);
+  }
+}
 ```
 
 ### [服务定位器模式]
 
 ```Java
+private static void testServiceLocator() {
+  ServiceLocator s1 = new ServiceLocator();
+  Service pService1 = s1.lookup("playlist");
+  Service hService1 = s1.lookup("history");
+  System.out.println(pService1.response(1));
+  System.out.println(hService1.response(1));
 
+  ServiceLocator s2 = new ServiceLocator();
+  Service pService2 = s2.lookup("playlist");
+  Service hService2 = s2.lookup("history");
+  System.out.println(pService2.response(2));
+  System.out.println(hService2.response(2));
+}
 ```
 
 ### [传输对象模式]
 
 ```Java
+private static void testTransferObject() {
+  com.catherine.transfer_object.Employee Thomos = new com.catherine.transfer_object.Employee();
+  Thomos.setID(1);
+  Thomos.setName("Thomos");
+  Thomos.setDept("Present");
 
+  com.catherine.transfer_object.Employee Jeff = new com.catherine.transfer_object.Employee();
+  Jeff.setID(2);
+  Jeff.setName("Jeff");
+  Jeff.setDept("Director");
+
+  com.catherine.transfer_object.Employee Jonas = new com.catherine.transfer_object.Employee();
+  Jonas.setID(3);
+  Jonas.setName("Jonas");
+  Jonas.setDept("Marketing");
+  Studio studio = new Studio();
+  studio.addEmployee(Thomos);
+  studio.addEmployee(Jeff);
+  studio.addEmployee(Jonas);
+  studio.showAllStuff();
+
+  System.out.println("update Jonas");
+  studio.updateEmployee(3, "Head marketing");
+  studio.showAllStuff();
+
+  System.out.println("fire Thomos");
+  studio.fireEmployee(1);
+  studio.showAllStuff();
+}
 ```
 
 ### [MVP 模式（Android专用）]
@@ -481,9 +771,9 @@ private static void testCommand() {
 [代理模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/proxy/>
 [责任链模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/chain_of_responsibility/>
 [命令模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/command/>
-[解释器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[迭代器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[中介者模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
+[解释器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/interpreter/>
+[迭代器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/iterator/>
+[中介者模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/>
 [备忘录模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
 [观察者模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
 [状态模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
@@ -543,3 +833,16 @@ private static void testCommand() {
 [Attack]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/command/Attack.java>
 [Jump]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/command/Jump.java>
 [Controller]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/command/Attack.java>
+[Expression]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/interpreter/Expression.java>
+[TerminalExpression]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/interpreter/TerminalExpression.java>
+[AndExpression]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/interpreter/AndExpression.java>
+[OrExpression]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/interpreter/OrExpression.java>
+[Toolkits]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/interpreter/Toolkits.java>
+[ChatRoom]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
+[User]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/User.java>
+[]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
+[]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
+[]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
+[]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
+[]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
+[]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
