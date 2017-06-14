@@ -8,9 +8,9 @@
 ### [Singleton Pattern]
 - There is only an instance of an object in the whole application, but you have to consider about the multi-threaded scenario.
 - It's classified into four groups - **Lazy Initializing Singleton**, **Eager Initializing Singleton**, **enum**and**Bill Pugh Singleton** by structures.
-- There's some information about 'synchronized', go to [SynchronizedSample] to see more.
+- There's some information about 'synchronized', go to [SynchronizedSample] and see more.
 
-| Singleton Pattern | Creating duplicated instances while running in other threads | Class load times | load times of getting instance | Thread Safety | link to codes | purpose | others |
+| Singleton Pattern | Creating duplicated instances while running with some threads | Class load times | load times of getting the instance | Thread Safety | link to codes | purpose | others |
 | -- | -- | -- | -- | -- | -- | -- | -- |
 | Lazy Initializing Singleton | yes | fast | slow | no | [LazyInitializingSingleton] | The instance which contains complicated methods is uncommonly used, and it also spends a lot of time to initialize. | It's better to use Bill Pugh Singleton rather than Lazy Initializing Singleton |
 | Lazy Initializing Singleton with double-checked locking | no | fast | slow | yes | [SafeLazyInitializingSingleton] | as above | as above |
