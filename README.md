@@ -10,9 +10,9 @@
 - It's classified into four groups - **Lazy Initializing Singleton**, **Eager Initializing Singleton**, **enum**and**Bill Pugh Singleton** by structures.
 - There's some information about 'synchronized', go to [SynchronizedSample] and read more.
 
-| Singleton Pattern | Creating duplicated instances while running with some threads | Class load times | load times of getting the instance | Thread Safety | link to codes | purpose | others |
+| Singleton Pattern | Creating duplicated instances while running with some threads | Class load times | Load times of getting the instance | Thread Safety | Link to codes | Purpose | Others |
 | -- | -- | -- | -- | -- | -- | -- | -- |
-| Lazy Initializing Singleton | yes | fast | slow | no | [LazyInitializingSingleton] | The instance which contains complicated methods is uncommonly used, and it also spends a lot of time to initialize. | It's better to use Bill Pugh Singleton rather than Lazy Initializing Singleton |
+| Lazy Initializing Singleton | yes | fast | slow | no | [LazyInitializingSingleton] | The instance which contains complicated methods is uncommonly used, and it also spends a lot of time to initialize. | It's better to use Bill Pugh Singleton than Lazy Initializing Singleton |
 | Lazy Initializing Singleton with double-checked locking | no | fast | slow | yes | [SafeLazyInitializingSingleton] | as above | as above |
 | Bill Pugh Singleton | no | fast | slow | yes | [BillPughSingleton] | as above | 只要应用中不使用内部类 JVM 就不会去加载这个单例类，也就不会创建单例对象，从而实现懒汉式的延迟加载和线程安全。 |
 | Eager Initializing Singleton | no | slow | fast | yes | [EagerInitializingSingleton] | It's a good idea to use Eager Initializing Singleton when the instance with less memory is fast to initialize. You can initialize the instance as the application starts. | -- |
