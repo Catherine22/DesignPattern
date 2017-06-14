@@ -8,7 +8,7 @@
 ### [单例模式]
 - 保证整个应用中某个实例只有一个，需考虑多线程的情形。
 - 根据不同的实现方式分成**懒汉模式**、**饿汉模式**、**枚举**和**内部静态类**。
-- 补充说明synchronized，详见[SynchronizedSample]
+- 补充说明 synchronized，详见[SynchronizedSample]
 
 | 单例模式 | 多线程时是否重复创建单例对象 | 加载类的速度 | 运行时获取对象的速度 | 线程安全 | 代码链接 | 适用情形 | 其它 |
 | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -16,7 +16,7 @@
 | 懒汉模式-双重校验锁 | 否 | 快 | 慢 | 是 | [SafeLazyInitializingSingleton] | 同上 | 同上 |
 | 内部静态类 | 否 | 快 | 慢 | 是 | [BillPughSingleton] | 同上 | 只要应用中不使用内部类 JVM 就不会去加载这个单例类，也就不会创建单例对象，从而实现懒汉式的延迟加载和线程安全。 |
 | 饿汉模式 | 否 | 慢 | 快 | 是 | [EagerInitializingSingleton] | 单例对象初始化非常快，而且占用内存非常小的时候这种方式是比较合适的，可以直接在应用启动时加载并初始化 | -- |
-| 枚举 | 否 | 慢 | 快 | 是 | [EnumSingleton] | -- | 创建枚举默认就是线程安全的，所以不需要担心double checked locking，而且还能防止反序列化导致重新创建新的对象 |
+| 枚举 | 否 | 慢 | 快 | 是 | [EnumSingleton] | -- | 创建枚举默认就是线程安全的，所以不需要担心双重校验锁，而且还能防止反序列化导致重新创建新的对象 |
 
 - **一般情况下直接使用饿汉模式就好了，如果明确要求要懒加载（lazy initialization）会倾向于使用静态内部类，如果涉及到反序列化创建对象时会试着使用枚举的方式来实现单例。**
 
@@ -576,7 +576,7 @@ private static void testCompositeEntity() {
 ### [数据访问对象模式]
 - DAO(Data Access Object)：通过DAO介面存取数据，这边本来有一个BlacklistDAO接口，并且由[BlacklistDAOImpl]实现，但是为了用单例模式解决多线程修改数据的问题直接省略BlacklistDAO接口。
 - 用singleton避免多线程操作数据库——static方法+synchronized代码块可以保证无论有多少线程，同时只会有一个线程执行该方法，用同一把锁锁定代码块，可以保证同时只有一个线程执行一个代码块（多线程，多种方法做方法排程，一次只执行一种方法）
-- 补充说明synchronized，详见[SynchronizedSample]
+- 补充说明 synchronized，详见[SynchronizedSample]
 
 ```Java
 private static void testDAO() {
@@ -755,7 +755,7 @@ private static void testTransferObject() {
 
 ## 补充说明
 
-### [synchronized]示范
+### [synchronized] 示范
 
 ```Java
 private static void testSynchronized() {
