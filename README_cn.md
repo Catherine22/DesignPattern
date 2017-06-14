@@ -143,7 +143,8 @@ private static void testPrototype() {
 ```
 
 ### [适配器模式]
-- 举例来说，用[Computer]来看影片，[Monitor]有两种插槽HDMI或VGA，假设数据流传到显示器做的事都一样，就是“显示画面”，这边创建一个[CableAdapter]（Adapter），根据电脑接头的类型，接到显示器相同的插槽。
+- 举例来说，用[Computer]和[Blu_ray_disc_player]来看影片，[Monitor]有两种插槽HDMI或VGA，假设数据流传到显示器做的事都一样，就是“显示画面”，这边创建一个[CableAdapter]（Adapter），根据电脑接头的类型，接到显示器相同的插槽。
+- 建立一个统一的接口[MediaPlayer]，让[Computer]、[Blu_ray_disc_player]和[CableAdapter]实现，而在Computer和Blu_ray_disc_player的play()则是呼叫CableAdapter的play()方法，真正做切换的地方是CableAdapter。
 
 ```Java
 private static void testAdapter() {
@@ -365,6 +366,7 @@ private static void testMediator() {
 ```
 
 ### [备忘录模式]
+- 备忘录模式用于记录状态，比如游戏存档。
 
 ```Java
 private static void testMemento() {
@@ -375,20 +377,23 @@ private static void testMemento() {
   village1.setWeapon("Sharpshot bow");
   village1.setXP(10000);
   village1.setOutfit("Noar survivor");
-  settings.save(village1.getState());
-  System.out.println(settings.load());
+  int save1 = settings.save(village1.getState());
+  System.out.println(settings.loadLatest());
 
   World village2 = new World();
   village2.setAmmo("Fire arrow");
   village2.setWeapon("War bow");
   village2.setXP(20000);
   village2.setOutfit("Shield weaver");
-  settings.save(village2.getState());
-  System.out.println(settings.load());
+  int save2 = settings.save(village2.getState());
+  System.out.println(settings.load(save1));
+  System.out.println(settings.load(save2));
 }
 ```
 
 ### [观察者模式]
+- 注册几个观察者，一旦状态改变就通知所有观察者。
+- 定义一个[BroadcastManager]来管理、发布通知，其它注册的观察者比如[HexObserver]、[BinaryObserver]收到通知后作出相应的处理。
 
 ```Java
 private static void testObserver() {
@@ -401,6 +406,8 @@ private static void testObserver() {
 }
 ```
 ### [观察者模式改]
+- 参考Android的LocalBroadcastManager，同观察者模式，做了些调整，让用户自定义观察者收到的信息和之后的行为。
+- 原先的观察者模式，收到通知后都是在个别实现观察者接口的类别里做不同的处理，改成用[Receiver]接口，让注册观察者（或理解为广播）的对象自行处理。
 
 ```Java
 private static void testObserverPlus() {
@@ -429,6 +436,7 @@ private static void testObserverPlus() {
 ```
 
 ### [状态模式]
+- 创建一个[Gear]接口，让几个不同的对象实现。
 
 ```Java
 private static void testState() {
@@ -444,6 +452,8 @@ private static void testState() {
 ```
 
 ### [空对象模式]
+- 处理对象为Null的情况，不要直接报NullPointerException。
+- 首先定义一个[AbstractID]的抽象类，让[RealID]和[NullID]给实现，一旦[IDChecker]在获取ID时为Null，自动返回在先前定义好的值。
 
 ```Java
 private static void testNullObject() {
@@ -458,6 +468,7 @@ private static void testNullObject() {
 ```
 
 ### [策略模式]
+- 策略模式的用途在于执行阶段时可进行不同的运算。
 
 ```Java
 private static void testStrategy() {
@@ -473,6 +484,9 @@ private static void testStrategy() {
 ```
 
 ### [模板模式]
+- 以程序化购买为例，每个阶段都会有些许不同，但是整体来说都是一样的步骤。
+- 两个要点：1. 分别实作每个阶段；2. 用final定义模版方法（整体流程）
+- 在[ProgrammaticBuying]定义每个抽象方法，再定义一个final的方法buyAds()，把每个步骤都写入（固定流程），如此只需要其它class实现抽象方法，所以，在程序化购买上[Blizzard]和[Supercell]的流程都一样，都是呼叫buyAds()，但是其中每个步骤的细节就是自行定义的。
 
 ```Java
 private static void testTemplate() {
@@ -487,6 +501,7 @@ private static void testTemplate() {
 ```
 
 ### [访问者模式]
+- 有一种情况是类，以[PrivateLevel]为例，内部某个方法showInfo()须常常修改，扩充这个方法只会改动方法内部的变量，和自身的类没啥关系，同时该类也很庞大或者复杂，希望在改动方法时尽量避免改到该类，可以通过访问者模式处理，让方法内部的实现在另一个类[RetrieveMethod]中处理，未来每次修改只需要更动RetrieveMethod。
 
 ```Java
 private static void testVisitor() {
@@ -505,6 +520,7 @@ private static void testVisitor() {
 ```
 
 ### [MVC 模式]
+- Model-[Coupon], View-[FalseListView] 和 Controller-[RetrieveCouponFromDB]的框架，Model代表存取数据的对象或JAVA POJO，View为视图，Controller则负责控制数据流向视图，用MVC有一个好处，把业务逻辑独立开来，方便进行单元测试。
 
 ```Java
 private static void testMVC() {
@@ -525,6 +541,8 @@ private static void testMVC() {
 ```
 
 ### [业务代表模式]
+- 建立[BusinessDelegate]，内部创建[BusinessLookUp]对象，用来切换[EJBService]和[JMSService]，再将BusinessDelegate实体传给[Client]，由Client呼叫BusinessDelegate的方法。
+- 几个优点：1. 可以把如何创建、调度服务（在[BusinessLookUp]内部实现）以及服务如何运作的部分隐藏起来。2. 可以控制服务（[EJBService]和[JMSService]）的缓存，不用管用户（Client）如何操作。
 
 ```Java
 private static void testBusinessDelegate() {
@@ -539,6 +557,10 @@ private static void testBusinessDelegate() {
 ```
 
 ### [组合实体模式]
+- 把对象分为粗颗粒和细颗粒，在此以[DependentBread]、[DependentMeat]和[DependentSauce]为例，这些是细颗粒，[CoarseGrainedHamburger]把几个对象（细颗粒）给组合在一起管理，这是粗颗粒。
+- 也可以有多个粗颗粒，这时候会建立一个对象[CompositeEntity]，获取多个粗颗粒并分别处理，比如getter和setter。
+- 举个例，bread, meat, sauce等细颗粒不能单独存在，必须三者合并成为hamburger（粗颗粒）才有意义，用组合实体模式进行hamburger的设置和引用。
+
 
 ```Java
 private static void testCompositeEntity() {
@@ -552,6 +574,8 @@ private static void testCompositeEntity() {
 ```
 
 ### [数据访问对象模式]
+- DAO(Data Access Object)：通过DAO介面存取数据，这边本来有一个BlacklistDAO接口，并且由[BlacklistDAOImpl]实现，但是为了用单例模式解决多线程修改数据的问题直接省略BlacklistDAO接口。
+- 用singleton避免多线程操作数据库——static方法+synchronized代码块可以保证无论有多少线程，同时只会有一个线程执行该方法，用同一把锁锁定代码块，可以保证同时只有一个线程执行一个代码块（多线程，多种方法做方法排程，一次只执行一种方法）
 - 补充说明synchronized，详见[SynchronizedSample]
 
 ```Java
@@ -614,6 +638,7 @@ private static void testDAO() {
 ```
 
 ### [前端控制器模式]
+- 通过调度器返回不同的视图或处理程序。
 
 ```Java
 private static void testFrontController() {
@@ -630,6 +655,8 @@ private static void testFrontController() {
 ```
 
 ### [拦截过滤器模式]
+- 拦截过滤器模式通过过滤器链处理多过滤器，和过滤器模式一样自定义过滤器的接口让每个过滤的类别各自实现。
+- 原始的逻辑是Main直接通过[MusicPlayer]呼叫getArtist(int)，加入拦截过滤器后变成通过MusicPlayer呼叫getArtist([FilterManager], MemberInfo)。
 
 ```Java
 private static void testInterceptingFilter() {
@@ -672,6 +699,8 @@ private static void testInterceptingFilter() {
 ```
 
 ### [服务定位器模式]
+- 服务定位器模式用在一种情况，假设用户访问某service获取数据，此时将该service做缓存，下次访问时直接导向缓存以提高效能。
+- 通过[ServiceLocator]获取服务，如果有存在[Cache]就直接调用，没有才通过[InitialService]
 
 ```Java
 private static void testServiceLocator() {
@@ -690,6 +719,7 @@ private static void testServiceLocator() {
 ```
 
 ### [传输对象模式]
+- 比如一间工作室[Studio]有一堆员工[Employee]，建立Employee对象，让Studio管理多个Employee。
 
 ```Java
 private static void testTransferObject() {
@@ -723,11 +753,23 @@ private static void testTransferObject() {
 }
 ```
 
-### [MVP 模式（Android专用）]
+## 补充说明
+
+### [synchronized]示范
 
 ```Java
-
+private static void testSynchronized() {
+  SynchronizedSample ss = new SynchronizedSample();
+  ss.testStaticParamsAsUsual();
+  ss.testStaticParams();
+  ss.testStaticParamsFromDifferentObj();
+  ss.testStaticMethod();
+  ss.testStaticMethodAndSyncCodes();
+}
 ```
+
+### MVP 模式（Android专用）
+- [Google MVP Sample]
 
 ## 参考来源
 - [runoob.com]
@@ -774,21 +816,24 @@ private static void testTransferObject() {
 [解释器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/interpreter/>
 [迭代器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/iterator/>
 [中介者模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/>
-[备忘录模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[观察者模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[状态模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[空对象模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[策略模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[模板模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[访问者模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[MVC 模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[业务代表模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[组合实体模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[数据访问对象模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[前端控制器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[拦截过滤器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[服务定位器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
-[传输对象模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
+[备忘录模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/memento/>
+[观察者模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/observer/>
+[观察者模式改]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/observer_premium/>
+[状态模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/state/>
+[空对象模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/null_object/>
+[策略模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/strategy/>
+[模板模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/template/>
+[访问者模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/visitor/>
+[MVC 模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mvc/>
+[业务代表模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/business_delegate/>
+[组合实体模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/composite_entity/>
+[数据访问对象模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/data_access_object/>
+[前端控制器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/front_controller/>
+[拦截过滤器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/intercepting_filter/>
+[服务定位器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/service_locator/>
+[传输对象模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/transfer_object/>
+[MVP 模式（Android专用）]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
+[synchronized]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/singleton/SynchronizedSample.java>
 [LazyInitializingSingleton]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/singleton/LazyInitializingSingleton.java>
 [SafeLazyInitializingSingleton]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/singleton/SafeLazyInitializingSingleton.java>
 [BillPughSingleton]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/singleton/BillPughSingleton.java>
@@ -812,6 +857,8 @@ private static void testTransferObject() {
 [Red2]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/prototype/Red.java>
 [Blue2]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/prototype/Blue.java>
 [Computer]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/adapter/Computer.java>
+[Blu_ray_disc_player]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/adapter/Blu_ray_disc_player.java>
+[MediaPlayer]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/adapter/MediaPlayer.java>
 [Monitor]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/adapter/Monitor.java>
 [CableAdapter]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/adapter/CableAdapter.java>
 [Garage]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/bridge/Garage.java>
@@ -840,9 +887,41 @@ private static void testTransferObject() {
 [Toolkits]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/interpreter/Toolkits.java>
 [ChatRoom]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
 [User]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/User.java>
-[]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
-[]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
-[]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
-[]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
-[]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
-[]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mediator/ChatRoom.java>
+[BroadcastManager]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/observer/BroadcastManager.java>
+[HexObserver]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/observer/HexObserver.java>
+[BinaryObserver]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/observer/BinaryObserver.java>
+[Receiver]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/observer_premium/Receiver.java>
+[Gear]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/state/Gear.java>
+[GearR]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/state/GearR.java>
+[AbstractID]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/null_object/AbstractID.java>
+[RealID]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/null_object/RealID.java>
+[NullID]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/null_object/NullID.java>
+[IDChecker]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/null_object/IDChecker.java>
+[ProgrammaticBuying]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/template/ProgrammaticBuying.java>
+[Blizzard]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/template/Blizzard.java>
+[Supercell]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/template/Supercell.java>
+[PrivateLevel]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/visitor/PrivateLevel.java>
+[RetrieveMethod]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/visitor/RetrieveMethod.java>
+[FalseListView]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mvc/FalseListView.java>
+[Coupon]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mvc/models/Coupon.java>
+[RetrieveCouponFromDB]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/mvc/RetrieveCouponFromDB.java>
+[BusinessDelegate]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/business_delegate/BusinessDelegate.java>
+[Client]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/business_delegate/Client.java>
+[BusinessLookUp]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/business_delegate/BusinessLookUp.java>
+[EJBService]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/business_delegate/EJBService.java>
+[JMSService]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/business_delegate/JMSService.java>
+[Cashier]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/composite_entity/Cashier.java>
+[CoarseGrainedHamburger]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/composite_entity/CoarseGrainedHamburger.java>
+[CompositeEntity]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/composite_entity/CompositeEntity.java>
+[DependentBread]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/composite_entity/DependentBread.java>
+[DependentMeat]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/composite_entity/DependentMeat.java>
+[DependentSauce]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/composite_entity/DependentSauce.java>
+[BlacklistDAOImpl]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/data_access_object/BlacklistDAOImpl.java>
+[MusicPlayer]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/intercepting_filter/MusicPlayer.java>
+[FilterManager]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/intercepting_filter/FilterManager.java>
+[ServiceLocator]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/service_locator/ServiceLocator.java>
+[Cache]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/service_locator/Cache.java>
+[InitialService]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/service_locator/InitialService.java>
+[Studio]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/transfer_object/Studio.java>
+[Employee]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/transfer_object/Employee.java>
+[Google MVP Sample]:<https://github.com/googlesamples/android-architecture>

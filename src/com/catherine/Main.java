@@ -431,16 +431,17 @@ public class Main {
 		village1.setWeapon("Sharpshot bow");
 		village1.setXP(10000);
 		village1.setOutfit("Noar survivor");
-		settings.save(village1.getState());
-		System.out.println(settings.load());
+		int save1 = settings.save(village1.getState());
+		System.out.println(settings.loadLatest());
 
 		World village2 = new World();
 		village2.setAmmo("Fire arrow");
 		village2.setWeapon("War bow");
 		village2.setXP(20000);
 		village2.setOutfit("Shield weaver");
-		settings.save(village2.getState());
-		System.out.println(settings.load());
+		int save2 = settings.save(village2.getState());
+		System.out.println(settings.load(save1));
+		System.out.println(settings.load(save2));
 	}
 
 	private static void testMediator() {

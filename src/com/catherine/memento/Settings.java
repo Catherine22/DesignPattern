@@ -1,16 +1,23 @@
 package com.catherine.memento;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Settings {
-	private static List<Aloy> history = new ArrayList<>();
+	private static Map<Integer, Aloy> history = new HashMap<>();
 
-	public void save(Aloy aloy) {
-		history.add(aloy);
+	public int save(Aloy aloy) {
+		int id = history.size();
+		history.put(id, aloy);
+		return id;
 	}
 
-	public Aloy load() {
-		return history.get(history.size() - 1);
+	public Aloy loadLatest() {
+		int id = history.size() - 1;
+		return history.get(id);
+	}
+
+	public Aloy load(int id) {
+		return history.get(id);
 	}
 }

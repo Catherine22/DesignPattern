@@ -1,7 +1,7 @@
 package com.catherine.null_object;
 
 /**
- * Null object模式：处理当Object为Null的情况
+ * Null object模式：处理对象为Null的情况
  * 
  * @author Catherine
  *
