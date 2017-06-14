@@ -8,7 +8,7 @@
 ### [Singleton Pattern]
 - There is only an instance of an object in the whole application, but you have to consider about the multi-threaded scenario.
 - It's classified into four groups - **Lazy Initializing Singleton**, **Eager Initializing Singleton**, **enum**and**Bill Pugh Singleton** by structures.
-- There's some information about 'synchronized', go to [SynchronizedSample] and see more.
+- There's some information about 'synchronized', go to [SynchronizedSample] and read more.
 
 | Singleton Pattern | Creating duplicated instances while running with some threads | Class load times | load times of getting the instance | Thread Safety | link to codes | purpose | others |
 | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -576,7 +576,7 @@ private static void testCompositeEntity() {
 ### [数据访问对象模式]
 - DAO(Data Access Object)：通过DAO介面存取数据，这边本来有一个BlacklistDAO接口，并且由[BlacklistDAOImpl]实现，但是为了用单例模式解决多线程修改数据的问题直接省略BlacklistDAO接口。
 - 用singleton避免多线程操作数据库——static方法+synchronized代码块可以保证无论有多少线程，同时只会有一个线程执行该方法，用同一把锁锁定代码块，可以保证同时只有一个线程执行一个代码块（多线程，多种方法做方法排程，一次只执行一种方法）
-- There's some information about 'synchronized', go to [SynchronizedSample] to see more.
+- There's some information about 'synchronized', go to [SynchronizedSample] and read more.
 
 ```Java
 private static void testDAO() {
