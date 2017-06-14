@@ -540,7 +540,7 @@ public class Main {
 		AbstractDecorator teslaWithNewWheelsNStereo = new Wheels(teslaWithNewStereo);
 		teslaWithNewWheelsNStereo.show();
 		System.out.print("\n");
-	};
+	}
 
 	public static void testComposite() {
 		Employee ceo = new Employee("Catherine", "CEO", 100000);

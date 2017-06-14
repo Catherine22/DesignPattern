@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * Flyweight模式的用意在于减少内存的使用。
- * 好比要画出20个圆形，总共只有五种颜色随意填充，创建一个HashMap以颜色作为key，一共只需要创建5个物件。
+ * 好比要画出二十个圆形，总共只有五种颜色随意填充，创建一个HashMap以颜色作为key，一共只需要创建五个物件。
  * 
  * @author Catherine
  *

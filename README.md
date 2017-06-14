@@ -25,6 +25,7 @@
   the License.
   ```
 
+  [中文版]:<https://github.com/Catherine22/DesignPattern/blob/master/README_cn.md>
   [tutorialspoint]:<https://www.tutorialspoint.com/design_pattern/index.htm>
   [runoob.com]:<http://www.runoob.com/design-pattern/design-pattern-tutorial.html>
   [深入理解Java并发之synchronized实现原理]:<http://blog.csdn.net/javazejian/article/details/72828483>
