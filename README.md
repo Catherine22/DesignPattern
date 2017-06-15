@@ -7,18 +7,18 @@
 
 ### [Singleton Pattern]
 - There is only an instance of an object in the whole application, but you have to consider about the multi-threaded scenario.
-- It's classified into four groups - **Lazy Initializing Singleton**, **Eager Initializing Singleton**, **enum**and**Bill Pugh Singleton** by structures.
+- It's classified into four groups - **Lazy Initializing Singleton**, **Eager Initializing Singleton**, **enum** and **Bill Pugh Singleton** by structures.
 - There's some information about 'synchronized', go to [SynchronizedSample] and read more.
 
 | Singleton Pattern | Creating duplicated instances while running with some threads | Class load times | Load times of getting the instance | Thread Safety | Link to codes | Purpose | Others |
 | -- | -- | -- | -- | -- | -- | -- | -- |
-| Lazy Initializing Singleton | yes | fast | slow | no | [LazyInitializingSingleton] | The instance which contains complicated methods is uncommonly used, and it also spends a lot of time to initialize. | It's better to use Bill Pugh Singleton than Lazy Initializing Singleton |
+| Lazy Initializing Singleton | yes | fast | slow | no | [LazyInitializingSingleton] | The instance which contains complicated methods is uncommonly used, and it also spends a lot of time to initialize. | It's better to use Bill Pugh Singleton than Lazy Initializing Singleton. |
 | Lazy Initializing Singleton with double-checked locking | no | fast | slow | yes | [SafeLazyInitializingSingleton] | as above | as above |
-| Bill Pugh Singleton | no | fast | slow | yes | [BillPughSingleton] | as above | 只要应用中不使用内部类 JVM 就不会去加载这个单例类，也就不会创建单例对象，从而实现懒汉式的延迟加载和线程安全。 |
+| Bill Pugh Singleton | no | fast | slow | yes | [BillPughSingleton] | as above | If you don't initialize the class, JVM won't load this class and create its static inner class. And that's why this pattern can be both thread safety and initialization-on-demand (initialize only when we call getInstance() method). |
 | Eager Initializing Singleton | no | slow | fast | yes | [EagerInitializingSingleton] | It's a good idea to use Eager Initializing Singleton when the instance with less memory is fast to initialize. You can initialize the instance as the application starts. | -- |
-| enum | no | slow | fast | yes | [EnumSingleton] | -- | It's thread safety. No need to worry about double-checked locking or creating new objects due to deserialization |
+| enum | no | slow | fast | yes | [EnumSingleton] | -- | It's thread safety. No need to worry about double-checked locking or creating new objects due to deserialization. |
 
-- **一般情况下直接使用饿汉模式就好了，如果明确要求要懒加载（lazy initialization）会倾向于使用静态内部类，如果涉及到反序列化创建对象时会试着使用枚举的方式来实现单例。**
+- **In general, lazy Initializing Singleton is my top priority, but if it's important to initialize lazily, I'd rather use Bill Pugh Singleton. And finally, try enum when it deserializes objects.**
 
 ```Java
 private static void testSingleton() {
@@ -48,37 +48,37 @@ private static void testSingleton() {
 
       SingletonTest sTest = new SingletonTest();
       if (bInstance1 == bInstance2 && bInstance1 == sTest.getBillPughSingleton())
-        System.out.println("Singleton\tBillPughSingleton 同一个实例");
+        System.out.println("Singleton\tBillPughSingleton same");
       else
-        System.out.println("Singleton\tBillPughSingleton 不同实例");
+        System.out.println("Singleton\tBillPughSingleton different");
 
       if (eInstance1 == eInstance2 && eInstance1 == sTest.getEagerInitializingSingleton())
-        System.out.println("Singleton\tEagerInitializingSingleton 同一个实例");
+        System.out.println("Singleton\tEagerInitializingSingleton same");
       else
-        System.out.println("Singleton\tEagerInitializingSingleton 不同实例");
+        System.out.println("Singleton\tEagerInitializingSingleton different");
 
       if (eunm1 == eunm2 && eunm1 == sTest.getEnumSingleton())
-        System.out.println("Singleton\tEnumSingleton 同一个实例");
+        System.out.println("Singleton\tEnumSingleton same");
       else
-        System.out.println("Singleton\tEnumSingleton 不同实例");
+        System.out.println("Singleton\tEnumSingleton different");
 
       if (lInstance1 == lInstance2 && lInstance1 == sTest.getLazyInitializingSingleton())
-        System.out.println("Singleton\tLazyInitializingSingleton 同一个实例");
+        System.out.println("Singleton\tLazyInitializingSingleton same");
       else
-        System.out.println("Singleton\tLazyInitializingSingleton 不同实例");
+        System.out.println("Singleton\tLazyInitializingSingleton different");
 
       if (sInstance1 == sInstance2 && sInstance1 == sTest.getSafeLazyInitializingSingleton())
-        System.out.println("Singleton\tSafeLazyInitializingSingleton 同一个实例");
+        System.out.println("Singleton\tSafeLazyInitializingSingleton same");
       else
-        System.out.println("Singleton\tSafeLazyInitializingSingleton 不同实例");
+        System.out.println("Singleton\tSafeLazyInitializingSingleton different");
     }
   });
   t.start();
 }
 ```
 
-### [工厂模式]
-- 比如要生产一个部件，内部构造一摸一样，唯有颜色不同，那就定义一个[Color1]接口，用户向[ColorFactory]要颜色，由[Red1]、[Blue1]或其它自订对象实现[Color1]。
+### [Factory Pattern]
+- For example, you want to make something, they've got the same structure but different colors. You'd create [Color1], an instance, and users would settle the color of every object in [ColorFactory]. Let [Red1], [Blue1] or the others to implement [Color1].
 
 ```Java
 private static void testFactory() {
@@ -88,9 +88,9 @@ private static void testFactory() {
 }
 ```
 
-### [抽象工厂模式]
-- 抽象工厂用在有大量工厂时，大致上与工厂模式一样，可理解成超级工厂模式。
-- [super factory]内有各式工厂，工厂内部运作同工厂模式。
+### [Abstract Factory Pattern]
+- Abstract factory pattern is useful when you've got a lot of factories. It's just like a super factory.
+- [super factory] includes many factories, each factory works with factory pattern.
 
 ```Java
 private static void testAbstractFactory() {
@@ -100,9 +100,9 @@ private static void testAbstractFactory() {
 }
 ```
 
-### [建造者模式]
-- 经过一系列的步骤完成一个复杂的对象。
-- 假设用户要生产[NewStyleRobotBuilder]和[OldStyleRobotBuilder]，定义[Robot]并实现[RobotPlan]，
+### [Builder Partten]
+- Generating a complicated object in a series of actions.
+- Let's say you want to build [new style robot] and [old style robot], you have to create [Robot] to implement [RobotPlan].
 制作[Robot]的步骤都一样（用[RobotBuilder]定义），所以两者只需要实现[RobotBuilder]接口，
 用户要生产时，直接和[RobotDirector]沟通即可，[RobotDirector]已经定义好制作机器人的流程。
 
@@ -799,9 +799,9 @@ private static void testSynchronized() {
 [深入理解Java并发之synchronized实现原理]:<http://blog.csdn.net/javazejian/article/details/72828483>
 [中文版]:<https://github.com/Catherine22/DesignPattern/blob/master/README_cn.md>
 [Singleton Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/singleton/>
-[工厂模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/factory/>
-[抽象工厂模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/abstract_factory/>
-[建造者模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/>
+[Factory Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/factory/>
+[Abstract Factory Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/abstract_factory/>
+[Builder Partten]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/>
 [原型模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/prototype/>
 [适配器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/adapter/>
 [桥接模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/bridge/>
@@ -845,8 +845,8 @@ private static void testSynchronized() {
 [Red1]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/factory/Red.java>
 [Blue1]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/factory/Blue.java>
 [super factory]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/abstract_factory/CarFactory.java>
-[NewStyleRobotBuilder]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/NewStyleRobotBuilder.java>
-[OldStyleRobotBuilder]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/OldStyleRobotBuilder.java>
+[new style robot]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/NewStyleRobotBuilder.java>
+[old style robot]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/OldStyleRobotBuilder.java>
 [RobotBuilder]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/RobotBuilder.java>
 [Robot]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/Robot.java>
 [RobotPlan]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/RobotPlan.java>

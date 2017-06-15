@@ -102,7 +102,7 @@ private static void testAbstractFactory() {
 
 ### [建造者模式]
 - 经过一系列的步骤完成一个复杂的对象。
-- 假设用户要生产[NewStyleRobotBuilder]和[OldStyleRobotBuilder]，定义[Robot]并实现[RobotPlan]，
+- 假设用户要生产[new style robot]和[old style robot]，定义[Robot]并实现[RobotPlan]，
 制作[Robot]的步骤都一样（用[RobotBuilder]定义），所以两者只需要实现[RobotBuilder]接口，
 用户要生产时，直接和[RobotDirector]沟通即可，[RobotDirector]已经定义好制作机器人的流程。
 
@@ -845,8 +845,8 @@ private static void testSynchronized() {
 [Red1]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/factory/Red.java>
 [Blue1]:<https://github.com/Catherine22/DesignPattern/blob/master/src/com/catherine/factory/Blue.java>
 [super factory]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/abstract_factory/CarFactory.java>
-[NewStyleRobotBuilder]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/NewStyleRobotBuilder.java>
-[OldStyleRobotBuilder]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/OldStyleRobotBuilder.java>
+[new style robot]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/NewStyleRobotBuilder.java>
+[old style robot]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/OldStyleRobotBuilder.java>
 [RobotBuilder]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/RobotBuilder.java>
 [Robot]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/Robot.java>
 [RobotPlan]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/RobotPlan.java>
