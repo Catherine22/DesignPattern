@@ -14,9 +14,9 @@
 | -- | -- | -- | -- | -- | -- | -- | -- |
 | Lazy Initializing Singleton | yes | fast | slow | no | [LazyInitializingSingleton] | The instance which contains complicated methods is uncommonly used, and it also spends a lot of time to initialize. | It's better to use Bill Pugh Singleton than Lazy Initializing Singleton. |
 | Lazy Initializing Singleton with double-checked locking | no | fast | slow | yes | [SafeLazyInitializingSingleton] | as above | as above |
-| Bill Pugh Singleton | no | fast | slow | yes | [BillPughSingleton] | as above | If you don't initialize the class, JVM won't load this class and create its static inner class. And that's why this pattern can be both thread safety and initialization-on-demand (initialize only when we call getInstance() method). |
+| Bill Pugh Singleton | no | fast | slow | yes | [BillPughSingleton] | as above | If you don't initialize the class, JVM won't load this class and create its static inner class. And that's why this pattern can be both thread-safe and initialization-on-demand (initialize only when we call getInstance() method). |
 | Eager Initializing Singleton | no | slow | fast | yes | [EagerInitializingSingleton] | It's a good idea to use Eager Initializing Singleton when the instance with less memory is fast to initialize. You can initialize the instance as the application starts. | -- |
-| enum | no | slow | fast | yes | [EnumSingleton] | -- | It's thread safety. No need to worry about double-checked locking or creating new objects due to deserialization. |
+| enum | no | slow | fast | yes | [EnumSingleton] | -- | It's thread-safe codes. No need to worry about double-checked locking or creating new objects due to deserialization. |
 
 - **In general, lazy Initializing Singleton is my top priority, but if it's important to initialize lazily, I'd rather use Bill Pugh Singleton. And finally, try enum when it deserializes objects.**
 
@@ -100,11 +100,10 @@ private static void testAbstractFactory() {
 }
 ```
 
-### [Builder Partten]
+### [Builder Pattern]
 - Generating a complicated object in a series of actions.
 - Let's say you want to build [new style robot] and [old style robot], you have to create [Robot] to implement [RobotPlan].
-制作[Robot]的步骤都一样（用[RobotBuilder]定义），所以两者只需要实现[RobotBuilder]接口，
-用户要生产时，直接和[RobotDirector]沟通即可，[RobotDirector]已经定义好制作机器人的流程。
+[RobotBuilder] develop a process for making [Robot]s, so the only one thing you have to do for [new style robot] and [old style robot] is implement [RobotBuilder]. When you want to produce some robots, you must call [RobotDirector], which has already defined the process for making [Robot]s.
 
 ```Java
 private static void testBuilder() {
@@ -118,7 +117,7 @@ private static void testBuilder() {
 }
 ```
 
-### [原型模式]
+### [Prototype Pattern]
 - 假如物件创建时耗费大量资源，用户不希望每次使用时都要重新创建，用prototype模式可以只创建一次，以后要用都用克隆。
 - 其实就是拷贝的意思，但是**不是返回内存地址的引用，而是一个拷贝的物件，拥有独立的内存空间**。
 - 用户通过[ColorCache]获取颜色，[Blue2]和[Red2]只需创建一次，每次存取时都是拿到克隆（返回本体的新拷贝，但无论如何本体都是安全的，不会被修改到）。
@@ -142,7 +141,7 @@ private static void testPrototype() {
 }
 ```
 
-### [适配器模式]
+### [Adapter Pattern]
 - 举例来说，用[Computer]和[Blu_ray_disc_player]来看影片，[Monitor]有两种插槽HDMI或VGA，假设数据流传到显示器做的事都一样，就是“显示画面”，这边创建一个[CableAdapter]（Adapter），根据电脑接头的类型，接到显示器相同的插槽。
 - 建立一个统一的接口[MediaPlayer]，让[Computer]、[Blu_ray_disc_player]和[CableAdapter]实现，而在Computer和Blu_ray_disc_player的play()则是呼叫CableAdapter的play()方法，真正做切换的地方是CableAdapter。
 
@@ -155,7 +154,7 @@ private static void testAdapter() {
 }
 ```
 
-### [桥接模式]
+### [Bridge Pattern]
 - 举个例，假如用户要购买一辆新车，他选择任意的车型与颜色再结账（呼叫[BuyerSGuide]的addToCart()），所以在建构模组时，实作[ColorSet]和[Garage]的接口。
 
 ```Java
@@ -165,7 +164,7 @@ private static void testBridge() {
 }
 ```
 
-### [过滤器模式]
+### [Filter Pattern]
 - 自定义过滤条件来过滤一群物件，自定义过滤器的接口让每个过滤的类别各自实现，过滤器模式着眼于不同过滤条件的[AndCriteria]、[OrCriteria]或其它逻辑运算。
 
 ```Java
@@ -194,8 +193,8 @@ private static void testFilter() {
 }
 ```
 
-### [组合模式]
-- 简言之，树状结构，用List <List>实现。
+### [Composite Pattern]
+- 简言之，树状结构，用List < List > 实现。
 
 ```Java
 public static void testComposite() {
@@ -217,7 +216,7 @@ public static void testComposite() {
 }
 ```
 
-### [装饰器模式]
+### [Decorator Pattern]
 - 建立一个[Car]的接口，用各品牌去实现show()， 装饰者模式的用意在于不破坏本体的模组前提下，对其进行修改，比如升级音响、换轮胎等，**有点类似补丁的概念**。
 - 必须实现本体是重点，见[AbstractDecorator]。
 
@@ -802,11 +801,11 @@ private static void testSynchronized() {
 [Factory Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/factory/>
 [Abstract Factory Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/abstract_factory/>
 [Builder Partten]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/>
-[原型模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/prototype/>
-[适配器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/adapter/>
-[桥接模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/bridge/>
-[过滤器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/filter/>
-[组合模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/composite/>
+[Prototype Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/prototype/>
+[Adapter Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/adapter/>
+[Bridge Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/bridge/>
+[Filter Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/filter/>
+[Composite Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/composite/>
 [装饰器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/decorator/>
 [外观模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/facade/>
 [享元模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>

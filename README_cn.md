@@ -195,7 +195,7 @@ private static void testFilter() {
 ```
 
 ### [组合模式]
-- 简言之，树状结构，用List <List>实现。
+- 简言之，树状结构，用List < List > 实现。
 
 ```Java
 public static void testComposite() {
