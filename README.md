@@ -118,10 +118,9 @@ private static void testBuilder() {
 ```
 
 ### [Prototype Pattern]
-- 假如物件创建时耗费大量资源，用户不希望每次使用时都要重新创建，用prototype模式可以只创建一次，以后要用都用克隆。
-- 其实就是拷贝的意思，但是**不是返回内存地址的引用，而是一个拷贝的物件，拥有独立的内存空间**。
-- 用户通过[ColorCache]获取颜色，[Blue2]和[Red2]只需创建一次，每次存取时都是拿到克隆（返回本体的新拷贝，但无论如何本体都是安全的，不会被修改到）。
-
+- There's a lot to do while initializing an object, so you don't want to generate an new object every creation. In this case, you create that object at first time, and afterwards get its clone instead a new one.
+- What it actually does is to copy an object, but **it returns the same object but in another address. Obviously it's a brand new object for jvm.**
+- You get color throught [ColorCache]. You just need to create [Blue2] and [Red2] at first time, since then you get clones (or copys. Whatever you modify those cpoys, the original one would be safe).
 ```Java
 private static void testPrototype() {
   try {
@@ -800,7 +799,7 @@ private static void testSynchronized() {
 [Singleton Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/singleton/>
 [Factory Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/factory/>
 [Abstract Factory Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/abstract_factory/>
-[Builder Partten]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/>
+[Builder Parttern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/>
 [Prototype Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/prototype/>
 [Adapter Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/adapter/>
 [Bridge Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/bridge/>
