@@ -799,7 +799,7 @@ private static void testSynchronized() {
 [Singleton Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/singleton/>
 [Factory Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/factory/>
 [Abstract Factory Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/abstract_factory/>
-[Builder Parttern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/>
+[Builder Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/>
 [Prototype Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/prototype/>
 [Adapter Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/adapter/>
 [Bridge Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/bridge/>
