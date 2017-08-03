@@ -118,9 +118,9 @@ private static void testBuilder() {
 ```
 
 ### [Prototype Pattern]
-- There's a lot to do while initializing an object, so you don't want to generate an new object every creation. In this case, you create that object at first time, and afterwards get its clone instead a new one.
+- There's a lot to do while initializing an object, so you don't want to generate a new object every creation. In this case, you create that object at first time, and afterwards get its clone instead a new one.
 - What it actually does is to copy an object, but **it returns the same object but in another address. Obviously it's a brand new object for jvm.**
-- You get color throught [ColorCache]. You just need to create [Blue2] and [Red2] at first time, since then you get clones (or copys. Whatever you modify those cpoys, the original one would be safe).
+- You get color throught [ColorCache]. You just need to create [Blue2] and [Red2] at first time, since then you get clones (or copys. Whatever you modify those cpoys, the original one would be safe.)
 ```Java
 private static void testPrototype() {
   try {
@@ -141,8 +141,8 @@ private static void testPrototype() {
 ```
 
 ### [Adapter Pattern]
-- 举例来说，用[Computer]和[Blu_ray_disc_player]来看影片，[Monitor]有两种插槽HDMI或VGA，假设数据流传到显示器做的事都一样，就是“显示画面”，这边创建一个[CableAdapter]（Adapter），根据电脑接头的类型，接到显示器相同的插槽。
-- 建立一个统一的接口[MediaPlayer]，让[Computer]、[Blu_ray_disc_player]和[CableAdapter]实现，而在Computer和Blu_ray_disc_player的play()则是呼叫CableAdapter的play()方法，真正做切换的地方是CableAdapter。
+- For example, you watch videos by [Computer] and [Blu_ray_disc_player] as a [Monitor] goes HDMI or VGA. Assuming both [Computer] and [Blu_ray_disc_player] do the same thing (display something), you connect your video player to the correct slot with [CableAdapter], a adapter.
+- Create a [MediaPlayer] interface, implemented by [Computer], [Blu_ray_disc_player] and [CableAdapter]. And when you call the method play() in Computer and Blu_ray_disc_player, it calls play() in CableAdapter clas to switch monitors.
 
 ```Java
 private static void testAdapter() {
