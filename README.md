@@ -141,7 +141,7 @@ private static void testPrototype() {
 ```
 
 ### [Adapter Pattern]
-- For example, you watch videos by [Computer] and [Blu_ray_disc_player] as a [Monitor] goes HDMI or VGA. Assuming both [Computer] and [Blu_ray_disc_player] do the same thing (display something), you connect your video player to the correct slot with [CableAdapter], a adapter.
+- For example, you watch videos by [Computer] and [Blu_ray_disc_player] as a [Monitor] goes HDMI or VGA. Assuming both [Computer] and [Blu_ray_disc_player] do the same thing (display something), you connect your video player to the correct slot with [CableAdapter].
 - Create a [MediaPlayer] interface, implemented by [Computer], [Blu_ray_disc_player] and [CableAdapter]. And when you call the method play() in Computer and Blu_ray_disc_player, it calls play() in CableAdapter clas to switch monitors.
 
 ```Java
