@@ -1,24 +1,22 @@
-# Design Pattern
-
-[中文版]
+# 设计模式
 
 
-## Introduction
+## 说明
 
-### [Singleton Pattern]
-- There is only an instance of an object in the whole application, but you have to consider about the multi-threaded scenario.
-- It's classified into four groups - **Lazy Initializing Singleton**, **Eager Initializing Singleton**, **enum** and **Bill Pugh Singleton** by structures.
-- There's some information about 'synchronized', go to [SynchronizedSample] and read more.
+### [单例模式]
+- 保证整个应用中某个实例只有一个，需考虑多线程的情形。
+- 根据不同的实现方式分成**懒汉模式**、**饿汉模式**、**枚举**和**内部静态类**。
+- 补充说明 synchronized，详见[SynchronizedSample]
 
-| Singleton Pattern | Creating duplicated instances while running with some threads | Class load times | Load times of getting the instance | Thread Safety | Link to codes | Purpose | Others |
+| 单例模式 | 多线程时是否重复创建单例对象 | 加载类的速度 | 运行时获取对象的速度 | 线程安全 | 代码链接 | 适用情形 | 其它 |
 | -- | -- | -- | -- | -- | -- | -- | -- |
-| Lazy Initializing Singleton | yes | fast | slow | no | [LazyInitializingSingleton] | The instance which contains complicated methods is uncommonly used, and it also spends a lot of time to initialize. | It's better to use Bill Pugh Singleton than Lazy Initializing Singleton. |
-| Lazy Initializing Singleton with double-checked locking | no | fast | slow | yes | [SafeLazyInitializingSingleton] | as above | as above |
-| Bill Pugh Singleton | no | fast | slow | yes | [BillPughSingleton] | as above | If you don't initialize the class, JVM won't load this class and create its static inner class. And that's why this pattern can be both thread-safe and initialization-on-demand (initialize only when we call getInstance() method). |
-| Eager Initializing Singleton | no | slow | fast | yes | [EagerInitializingSingleton] | It's a good idea to use Eager Initializing Singleton when the instance with less memory is fast to initialize. You can initialize the instance as the application starts. | -- |
-| enum | no | slow | fast | yes | [EnumSingleton] | -- | It's thread-safe codes. No need to worry about double-checked locking or creating new objects due to deserialization. |
+| 懒汉模式 | 会 | 快 | 慢 | 否 | [LazyInitializingSingleton] | 某个单例用的次数不是很多，但是这个单例提供的功能又非常复杂，而且加载和初始化要消耗大量的资源 | 与其用懒汉模式不如直接用内部静态类 |
+| 懒汉模式-双重校验锁 | 否 | 快 | 慢 | 是 | [SafeLazyInitializingSingleton] | 同上 | 同上 |
+| 内部静态类 | 否 | 快 | 慢 | 是 | [BillPughSingleton] | 同上 | 只要应用中不使用内部类 JVM 就不会去加载这个单例类，也就不会创建单例对象，从而实现懒汉式的延迟加载和线程安全。 |
+| 饿汉模式 | 否 | 慢 | 快 | 是 | [EagerInitializingSingleton] | 单例对象初始化非常快，而且占用内存非常小的时候这种方式是比较合适的，可以直接在应用启动时加载并初始化 | -- |
+| 枚举 | 否 | 慢 | 快 | 是 | [EnumSingleton] | -- | 创建枚举默认就是线程安全的，所以不需要担心双重校验锁，而且还能防止反序列化导致重新创建新的对象 |
 
-- **In general, lazy Initializing Singleton is my top priority, but if it's important to initialize lazily, I'd rather use Bill Pugh Singleton. And finally, try enum when it deserializes objects.**
+- **一般情况下直接使用饿汉模式就好了，如果明确要求要懒加载（lazy initialization）会倾向于使用静态内部类，如果涉及到反序列化创建对象时会试着使用枚举的方式来实现单例。**
 
 ```Java
 private static void testSingleton() {
@@ -48,37 +46,37 @@ private static void testSingleton() {
 
       SingletonTest sTest = new SingletonTest();
       if (bInstance1 == bInstance2 && bInstance1 == sTest.getBillPughSingleton())
-        System.out.println("Singleton\tBillPughSingleton same");
+        System.out.println("Singleton\tBillPughSingleton 同一个实例");
       else
-        System.out.println("Singleton\tBillPughSingleton different");
+        System.out.println("Singleton\tBillPughSingleton 不同实例");
 
       if (eInstance1 == eInstance2 && eInstance1 == sTest.getEagerInitializingSingleton())
-        System.out.println("Singleton\tEagerInitializingSingleton same");
+        System.out.println("Singleton\tEagerInitializingSingleton 同一个实例");
       else
-        System.out.println("Singleton\tEagerInitializingSingleton different");
+        System.out.println("Singleton\tEagerInitializingSingleton 不同实例");
 
       if (eunm1 == eunm2 && eunm1 == sTest.getEnumSingleton())
-        System.out.println("Singleton\tEnumSingleton same");
+        System.out.println("Singleton\tEnumSingleton 同一个实例");
       else
-        System.out.println("Singleton\tEnumSingleton different");
+        System.out.println("Singleton\tEnumSingleton 不同实例");
 
       if (lInstance1 == lInstance2 && lInstance1 == sTest.getLazyInitializingSingleton())
-        System.out.println("Singleton\tLazyInitializingSingleton same");
+        System.out.println("Singleton\tLazyInitializingSingleton 同一个实例");
       else
-        System.out.println("Singleton\tLazyInitializingSingleton different");
+        System.out.println("Singleton\tLazyInitializingSingleton 不同实例");
 
       if (sInstance1 == sInstance2 && sInstance1 == sTest.getSafeLazyInitializingSingleton())
-        System.out.println("Singleton\tSafeLazyInitializingSingleton same");
+        System.out.println("Singleton\tSafeLazyInitializingSingleton 同一个实例");
       else
-        System.out.println("Singleton\tSafeLazyInitializingSingleton different");
+        System.out.println("Singleton\tSafeLazyInitializingSingleton 不同实例");
     }
   });
   t.start();
 }
 ```
 
-### [Factory Pattern]
-- For example, you want to make something, they've got the same structure but different colors. You'd create [Color1], an instance, and users would settle the color of every object in [ColorFactory]. Let [Red1], [Blue1] or the others to implement [Color1].
+### [工厂模式]
+- 比如要生产一个部件，内部构造一摸一样，唯有颜色不同，那就定义一个[Color1]接口，用户向[ColorFactory]要颜色，由[Red1]、[Blue1]或其它自订对象实现[Color1]。
 
 ```Java
 private static void testFactory() {
@@ -88,9 +86,9 @@ private static void testFactory() {
 }
 ```
 
-### [Abstract Factory Pattern]
-- Abstract factory pattern is useful when you've got a lot of factories. It's just like a super factory.
-- [super factory] includes many factories, each factory works with factory pattern.
+### [抽象工厂模式]
+- 抽象工厂用在有大量工厂时，大致上与工厂模式一样，可理解成超级工厂模式。
+- [super factory]内有各式工厂，工厂内部运作同工厂模式。
 
 ```Java
 private static void testAbstractFactory() {
@@ -100,10 +98,11 @@ private static void testAbstractFactory() {
 }
 ```
 
-### [Builder Pattern]
-- Generating a complicated object in a series of actions.
-- Let's say you want to build [new style robot] and [old style robot], you have to create [Robot] to implement [RobotPlan].
-[RobotBuilder] develop a process for making [Robot]s, so the only one thing you have to do for [new style robot] and [old style robot] is implement [RobotBuilder]. When you want to produce some robots, you must call [RobotDirector], which has already defined the process for making [Robot]s.
+### [建造者模式]
+- 经过一系列的步骤完成一个复杂的对象。
+- 假设用户要生产[new style robot]和[old style robot]，定义[Robot]并实现[RobotPlan]，
+制作[Robot]的步骤都一样（用[RobotBuilder]定义），所以两者只需要实现[RobotBuilder]接口，
+用户要生产时，直接和[RobotDirector]沟通即可，[RobotDirector]已经定义好制作机器人的流程。
 
 ```Java
 private static void testBuilder() {
@@ -117,10 +116,11 @@ private static void testBuilder() {
 }
 ```
 
-### [Prototype Pattern]
-- There's a lot to do while initializing an object, so you don't want to generate a new object every creation. In this case, you create that object at first time, and afterwards get its clone instead a new one.
-- What it actually does is to copy an object, but **it returns the same object but in another address. Obviously it's a brand new object for jvm.**
-- You get color throught [ColorCache]. You just need to create [Blue2] and [Red2] at first time, since then you get clones (or copys. Whatever you modify those cpoys, the original one would be safe.)
+### [原型模式]
+- 假如物件创建时耗费大量资源，用户不希望每次使用时都要重新创建，用prototype模式可以只创建一次，以后要用都用克隆。
+- 其实就是拷贝的意思，但是**不是返回内存地址的引用，而是一个拷贝的物件，拥有独立的内存空间**。
+- 用户通过[ColorCache]获取颜色，[Blue2]和[Red2]只需创建一次，每次存取时都是拿到克隆（返回本体的新拷贝，但无论如何本体都是安全的，不会被修改到）。
+
 ```Java
 private static void testPrototype() {
   try {
@@ -140,9 +140,9 @@ private static void testPrototype() {
 }
 ```
 
-### [Adapter Pattern]
-- For example, you watch videos by [Computer] and [Blu_ray_disc_player] as a [Monitor] goes HDMI or VGA. Assuming both [Computer] and [Blu_ray_disc_player] do the same thing (display something), you connect your video player to the correct slot with [CableAdapter].
-- Create a [MediaPlayer] interface, implemented by [Computer], [Blu_ray_disc_player] and [CableAdapter]. And when you call the method play() in Computer and Blu_ray_disc_player, it calls play() in CableAdapter clas to switch monitors.
+### [适配器模式]
+- 举例来说，用[Computer]和[Blu_ray_disc_player]来看影片，[Monitor]有两种插槽HDMI或VGA，假设数据流传到显示器做的事都一样，就是“显示画面”，这边创建一个[CableAdapter]（Adapter），根据电脑接头的类型，接到显示器相同的插槽。
+- 建立一个统一的接口[MediaPlayer]，让[Computer]、[Blu_ray_disc_player]和[CableAdapter]实现，而在Computer和Blu_ray_disc_player的play()则是呼叫CableAdapter的play()方法，真正做切换的地方是CableAdapter。
 
 ```Java
 private static void testAdapter() {
@@ -153,7 +153,7 @@ private static void testAdapter() {
 }
 ```
 
-### [Bridge Pattern]
+### [桥接模式]
 - 举个例，假如用户要购买一辆新车，他选择任意的车型与颜色再结账（呼叫[BuyerSGuide]的addToCart()），所以在建构模组时，实作[ColorSet]和[Garage]的接口。
 
 ```Java
@@ -163,7 +163,7 @@ private static void testBridge() {
 }
 ```
 
-### [Filter Pattern]
+### [过滤器模式]
 - 自定义过滤条件来过滤一群物件，自定义过滤器的接口让每个过滤的类别各自实现，过滤器模式着眼于不同过滤条件的[AndCriteria]、[OrCriteria]或其它逻辑运算。
 
 ```Java
@@ -192,7 +192,7 @@ private static void testFilter() {
 }
 ```
 
-### [Composite Pattern]
+### [组合模式]
 - 简言之，树状结构，用List < List > 实现。
 
 ```Java
@@ -215,7 +215,7 @@ public static void testComposite() {
 }
 ```
 
-### [Decorator Pattern]
+### [装饰器模式]
 - 建立一个[Car]的接口，用各品牌去实现show()， 装饰者模式的用意在于不破坏本体的模组前提下，对其进行修改，比如升级音响、换轮胎等，**有点类似补丁的概念**。
 - 必须实现本体是重点，见[AbstractDecorator]。
 
@@ -574,7 +574,7 @@ private static void testCompositeEntity() {
 ### [数据访问对象模式]
 - DAO(Data Access Object)：通过DAO介面存取数据，这边本来有一个BlacklistDAO接口，并且由[BlacklistDAOImpl]实现，但是为了用单例模式解决多线程修改数据的问题直接省略BlacklistDAO接口。
 - 用singleton避免多线程操作数据库——static方法+synchronized代码块可以保证无论有多少线程，同时只会有一个线程执行该方法，用同一把锁锁定代码块，可以保证同时只有一个线程执行一个代码块（多线程，多种方法做方法排程，一次只执行一种方法）
-- There's some information about 'synchronized', go to [SynchronizedSample] and read more.
+- 补充说明 synchronized，详见[SynchronizedSample]
 
 ```Java
 private static void testDAO() {
@@ -795,16 +795,16 @@ private static void testSynchronized() {
 [tutorialspoint]:<https://www.tutorialspoint.com/design_pattern/index.htm>
 [runoob.com]:<http://www.runoob.com/design-pattern/design-pattern-tutorial.html>
 [深入理解Java并发之synchronized实现原理]:<http://blog.csdn.net/javazejian/article/details/72828483>
-[中文版]:<https://github.com/Catherine22/DesignPattern/blob/master/README_cn.md>
-[Singleton Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/singleton/>
-[Factory Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/factory/>
-[Abstract Factory Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/abstract_factory/>
-[Builder Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/>
-[Prototype Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/prototype/>
-[Adapter Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/adapter/>
-[Bridge Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/bridge/>
-[Filter Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/filter/>
-[Composite Pattern]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/composite/>
+[English]:<https://github.com/Catherine22/DesignPattern/blob/master/README.md>
+[单例模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/singleton/>
+[工厂模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/factory/>
+[抽象工厂模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/abstract_factory/>
+[建造者模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/builder/>
+[原型模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/prototype/>
+[适配器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/adapter/>
+[桥接模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/bridge/>
+[过滤器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/filter/>
+[组合模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/composite/>
 [装饰器模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/decorator/>
 [外观模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/facade/>
 [享元模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/flyweight/>
