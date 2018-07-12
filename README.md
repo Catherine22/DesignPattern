@@ -102,7 +102,8 @@ private static void testAbstractFactory() {
 - 经过一系列的步骤完成一个复杂的对象。
 - 假设用户要生产[new style robot]和[old style robot]，定义[Robot]并实现[RobotPlan]，
 制作[Robot]的步骤都一样（用[RobotBuilder]定义），所以两者只需要实现[RobotBuilder]接口，
-用户要生产时，直接和[RobotDirector]沟通即可，[RobotDirector]已经定义好制作机器人的流程。
+用户要生产时，直接和[RobotDirector]沟通即可，[RobotDirector]已经定义好制作机器人的流程。   
+- 工厂模式是负责加工的，适配器模式包括工厂模式，增加了统一的抽象接口定义，方便以后在不同的数据库切换而不用改底层代码。
 
 ```Java
 private static void testBuilder() {
@@ -154,7 +155,8 @@ private static void testAdapter() {
 ```
 
 ### [桥接模式]
-- 举个例，假如用户要购买一辆新车，他选择任意的车型与颜色再结账（呼叫[BuyerSGuide]的addToCart()），所以在建构模组时，实作[ColorSet]和[Garage]的接口。
+- 举个例，假如用户要购买一辆新车，他选择任意的车型与颜色再结账（呼叫[BuyerSGuide]的addToCart()），所以在建构模组时，实作[ColorSet]和[Garage]的接口。    
+- 工厂模式是一个产品，自己只是提出来需要厂家生产，而桥接模式则是自己的产品去调用某个对象里的某个方法而已。这就是区别。最典型的例子就是JDBC。JDBC API(Sun)提供抽象部分，各个JDBC驱动厂商(Oracle, Mysql...)提供实现部分。新的JDBC驱动可以“即插即用”在JDBC API中，而不需要修改我们调用者的代码。这就是所谓的抽象部分(JDBC API)与它的实现部分(JDBC Driver)分离。从宏观角度JDBC可以称为桥模式。
 
 ```Java
 private static void testBridge() {
@@ -773,6 +775,7 @@ private static void testSynchronized() {
 - [runoob.com]
 - [tutorialspoint]
 - [深入理解Java并发之synchronized实现原理]
+- [桥接模式与工厂模式的差别]
 
 ## 开源授权协议
 
@@ -795,6 +798,7 @@ private static void testSynchronized() {
 [tutorialspoint]:<https://www.tutorialspoint.com/design_pattern/index.htm>
 [runoob.com]:<http://www.runoob.com/design-pattern/design-pattern-tutorial.html>
 [深入理解Java并发之synchronized实现原理]:<http://blog.csdn.net/javazejian/article/details/72828483>
+[桥接模式与工厂模式的差别]:<https://www.cnblogs.com/youxin/archive/2013/05/24/3097340.html>
 [English]:<https://github.com/Catherine22/DesignPattern/blob/master/README.md>
 [单例模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/singleton/>
 [工厂模式]:<https://github.com/Catherine22/DesignPattern/tree/master/src/com/catherine/factory/>
